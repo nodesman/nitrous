@@ -1,0 +1,11 @@
+[package]
+name = "tsbrake_core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+oxc_parser = "0.13.0"
+oxc_allocator = "0.13.0"
+oxc_ast = "0.13.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

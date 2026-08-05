@@ -1,0 +1,27 @@
+{
+  "name": "tsalum",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "tsalum": "./bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && tsc src/linter.ts --target esnext --module esnext --moduleResolution bundler --outDir dist",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.9",
+    "vite": "^5.2.11",
+    "vitest": "^4.1.9"
+  }
+}
