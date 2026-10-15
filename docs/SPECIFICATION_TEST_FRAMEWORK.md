@@ -1,8 +1,8 @@
-# Architectural Specification: The Sovereign TypeScript Test Specification Engine (`tsalum-spec`)
+# Architectural Specification: The Sovereign TypeScript Test Specification Engine (`nitrous-spec`)
 
 > **Document Status:** Ratified Architectural Specification & Deep-Code Blueprint  
-> **Target Path:** [`/Users/rajsekharan/projects/foundry/tech/tsalum/docs/SPECIFICATION_TEST_FRAMEWORK.md`](file:///Users/rajsekharan/projects/foundry/tech/tsalum/docs/SPECIFICATION_TEST_FRAMEWORK.md)  
-> **Workspace Context:** [`tech/tsalum`](file:///Users/rajsekharan/projects/foundry/tech/tsalum)  
+> **Target Path:** [`/Users/rajsekharan/projects/foundry/tech/nitrous/docs/SPECIFICATION_TEST_FRAMEWORK.md`](file:///Users/rajsekharan/projects/foundry/tech/nitrous/docs/SPECIFICATION_TEST_FRAMEWORK.md)  
+> **Workspace Context:** [`tech/nitrous`](file:///Users/rajsekharan/projects/foundry/tech/nitrous)  
 > **Core Philosophy:** Correctness by Construction, ThoughtWorks Calisthenic Discipline, and Anti-Mocking Governance for High-Acuity Systems & AI Vibe-Coding  
 
 ---
@@ -38,8 +38,8 @@
    - 5.4 [Example 4: Error Handling: Thrown Exceptions vs. Domain Result Objects](#54-example-4-error-handling-thrown-exceptions-vs-domain-result-objects)
    - 5.5 [Example 5: Observable Side-Effects as State (Audit, Sent Messages, Queued Jobs)](#55-example-5-observable-side-effects-as-state)
    - 5.6 [Example 6: Partial Matching vs. Strict DTO Matching](#56-example-6-partial-matching-vs-strict-dto-matching)
-6. [Architectural Comparison: Jest/Vitest vs. `tsalum-spec`](#6-architectural-comparison-jestvitest-vs-tsalum-spec)
-7. [Integration with `tsalum` & Developer Workflows](#7-integration-with-tsalum--developer-workflows)
+6. [Architectural Comparison: Jest/Vitest vs. `nitrous-spec`](#6-architectural-comparison-jestvitest-vs-nitrous-spec)
+7. [Integration with `nitrous` & Developer Workflows](#7-integration-with-nitrous--developer-workflows)
 
 ---
 
@@ -65,7 +65,7 @@ Traditional engineering teams try to fight test rot through **post-hoc inspectio
 
 This fails because **if a tool provides an ergonomic escape hatch to write bad code, developers and AI agents will inevitably take it**. When `vi.fn()` and `jest.mock()` are standard imports in the test runner, mock-slop is guaranteed.
 
-**The Foundational Law of `tsalum-spec`:**
+**The Foundational Law of `nitrous-spec`:**
 > **Make bad tests structurally impossible to write.**  
 > If the test framework literally exports no mock, spy, or stub primitive, neither a human nor an LLM can write Mocking Theater. To write a passing test, the author is forced by the compiler to design clean domain boundaries, use stateful in-memory fakes, and assert against observable domain outcomes.
 
@@ -91,7 +91,7 @@ it('should process payment', async () => {
 
 If `service.process` accidentally bills the user twice, this test still passes. If the mailer payload is corrupted, this test still passes. The test verifies nothing about reality.
 
-`tsalum-spec` replaces this entire pathology with a rigid, functional contract: `setup() -> run(context) -> expect`.
+`nitrous-spec` replaces this entire pathology with a rigid, functional contract: `setup() -> run(context) -> expect`.
 
 ---
 
@@ -110,7 +110,7 @@ In 2008, Jeff Bay contributed the seminal chapter "Object Calisthenics" to *The 
 8. No classes with more than two instance variables
 9. No getters or setters (Tell, Don't Ask)
 
-The parent project of this specification, [`tech/tsalum`](file:///Users/rajsekharan/projects/foundry/tech/tsalum/README.md), enforces these rules on production code. But when applied to testing, a sharp realization occurs: **Clean domain code cannot be tested with dirty test frameworks.**
+The parent project of this specification, [`tech/nitrous`](file:///Users/rajsekharan/projects/foundry/tech/nitrous/README.md), enforces these rules on production code. But when applied to testing, a sharp realization occurs: **Clean domain code cannot be tested with dirty test frameworks.**
 
 ### 2.2 Detroit (Classicist) vs. London (Mockist) Schools of TDD
 
@@ -125,7 +125,7 @@ The software engineering discipline has two classic traditions of TDD:
 | **Refactoring Safety** | **High**: Internal implementation changes don't break tests | **Very Low**: Renaming internal methods shatters tests |
 | **Coupling** | Decoupled from internal wiring | Bound tightly to method signatures |
 
-The JavaScript ecosystem mistakenly embraced the London School, producing brittle test suites that resist refactoring. `tsalum-spec` is an unapologetic return to the **Detroit School**.
+The JavaScript ecosystem mistakenly embraced the London School, producing brittle test suites that resist refactoring. `nitrous-spec` is an unapologetic return to the **Detroit School**.
 
 ### 2.3 Martin Fowler's "Mocks Aren't Stubs" & The 15-Year Detour
 
@@ -133,7 +133,7 @@ In 2007, Martin Fowler published *Mocks Aren't Stubs*, explicitly differentiatin
 * **Fakes:** Working implementations taking in-memory shortcuts (e.g., an in-memory repository backed by a `Map`).
 * **Mocks:** Pre-programmed interaction checkers that verify method calls.
 
-Fowler warned that interaction-heavy mockist tests create tight coupling between test files and implementation details. Despite this warning, Jest, Sinon, and Vitest made mocks their central primitive. `tsalum-spec` closes that 15-year detour.
+Fowler warned that interaction-heavy mockist tests create tight coupling between test files and implementation details. Despite this warning, Jest, Sinon, and Vitest made mocks their central primitive. `nitrous-spec` closes that 15-year detour.
 
 ### 2.4 The Pathology of Jest & Vitest
 
@@ -184,7 +184,7 @@ Fowler warned that interaction-heavy mockist tests create tight coupling between
 ```
 
 ### 3.1 Law I: Zero Mocking API
-`tsalum-spec` exports no `mock()`, `spy()`, `stub()`, or `spyOn()`. 
+`nitrous-spec` exports no `mock()`, `spy()`, `stub()`, or `spyOn()`. 
 If code cannot be tested without a mock, the architecture is flawed. The developer must either extract an in-memory fake or decouple the domain aggregate.
 
 ### 3.2 Law II: The Pure Tripartite Contract
@@ -1193,9 +1193,9 @@ export const publicDtoStrictSpec = test('Public user serializer outputs only whi
 
 ---
 
-## 6. Architectural Comparison: Jest/Vitest vs. `tsalum-spec`
+## 6. Architectural Comparison: Jest/Vitest vs. `nitrous-spec`
 
-| Capability / Concern | Traditional Jest / Vitest | `tsalum-spec` |
+| Capability / Concern | Traditional Jest / Vitest | `nitrous-spec` |
 | :--- | :--- | :--- |
 | **Primary Testing School** | London School (Mockist) | Detroit School (Classicist / Outcome-focused) |
 | **Mocking Philosophy** | Ubiquitous (`jest.mock`, `vi.fn`, `spyOn`) | **Zero Mocks by Design** (Compilation error to attempt mocking) |
@@ -1210,11 +1210,11 @@ export const publicDtoStrictSpec = test('Public user serializer outputs only whi
 
 ---
 
-## 7. Integration with `tsalum` & Developer Workflows
+## 7. Integration with `nitrous` & Developer Workflows
 
 ### 7.1 The Dual-Pincer Strategy: Linter + Spec Harness
 
-Within [`tech/tsalum`](file:///Users/rajsekharan/projects/foundry/tech/tsalum), the system operates as a unified two-tiered quality gate:
+Within [`tech/nitrous`](file:///Users/rajsekharan/projects/foundry/tech/nitrous), the system operates as a unified two-tiered quality gate:
 
 ```
   ┌──────────────────────────────────────────────────────────────┐
@@ -1225,7 +1225,7 @@ Within [`tech/tsalum`](file:///Users/rajsekharan/projects/foundry/tech/tsalum), 
                  │                               │
                  ▼                               ▼
      ┌───────────────────────┐       ┌───────────────────────┐
-     │  `tsalum lint`        │       │  `tsalum test`        │
+     │  `nitrous lint`        │       │  `nitrous test`        │
      │  (The Calisthenic     │       │  (The Specification   │
      │   Flocculant)         │       │   Engine)             │
      │                       │       │                       │
@@ -1241,8 +1241,8 @@ Within [`tech/tsalum`](file:///Users/rajsekharan/projects/foundry/tech/tsalum), 
                      SOVEREIGN PRODUCTION CODE
 ```
 
-1. **`tsalum lint`** audits production source code, ensuring that entities are small, decoupled, and free of control-flow rot.
-2. **`tsalum test`** runs the specification suite, guaranteeing that all tests verify observable domain outcomes without mocking theater.
+1. **`nitrous lint`** audits production source code, ensuring that entities are small, decoupled, and free of control-flow rot.
+2. **`nitrous test`** runs the specification suite, guaranteeing that all tests verify observable domain outcomes without mocking theater.
 
 ### 7.2 Summary of Advantages for Thought-Partnership
 

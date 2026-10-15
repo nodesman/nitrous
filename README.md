@@ -1,18 +1,18 @@
-# alum 💎
+# nitrous 💎
 
 A strict **Object Calisthenics Clarifier & Linter** designed to eliminate design debt at the point of creation, enabling seamless, zero-refactoring transitions from prototype to production.
 
 ---
 
-## 💎 The Philosophy: Clarify AI Code like Alum Purifies Water
+## 💎 The Philosophy: Clarify AI Code like Nitrous Purifies Water
 
-Just as **alum** is added to turbid water to cause floating microscopic impurities to coagulate and settle out into pure clarity, **`alum`** acts as a clarifying agent for your codebase.
+Just as **nitrous** is added to turbid water to cause floating microscopic impurities to coagulate and settle out into pure clarity, **`nitrous`** acts as a clarifying agent for your codebase.
 
 When you build at high speed—especially when **vibe coding** with AI agents—design discipline is often sacrificed for initial momentum. AI models write code sequentially, defaulting to nested control loops, flat structures, and primitive obsession because it is contextually convenient. 
 
 Over time, this creates murky spaghetti code. 
 
-**`tsalum` solves this.** By enforcing the [9 Laws of Object Calisthenics](file:///Users/rajsekharan/projects/foundry/tech/tsalum/docs/RULES.md), it acts as an immediate structural filter. It precipitates out technical debt (nested blocks, getters, loose primitives) and leaves pure, drinkable domain architecture:
+**`nitrous` solves this.** By enforcing the [9 Laws of Object Calisthenics](file:///Users/rajsekharan/projects/foundry/tech/nitrous/docs/RULES.md), it acts as an immediate structural filter. It precipitates out technical debt (nested blocks, getters, loose primitives) and leaves pure, drinkable domain architecture:
 *   **Zero-Refactor Shipping:** Your prototype code *is* production-ready code.
 *   **Decoupled by Design:** No nested logic, no raw primitives leaking domain logic, and no bloated classes.
 *   **Cognitive Relief:** Spend your energy innovating and designing features rather than wrestling with legacy code structures.
@@ -23,18 +23,18 @@ Over time, this creates murky spaghetti code.
 
 LLMs lack design empathy and will generate structural mess if left unconstrained. Telling them to "write clean code" in a prompt is unreliable.
 
-`tsalum` solves this by introducing a **programmatic steering loop**:
+`nitrous` solves this by introducing a **programmatic steering loop**:
 1.  **AI Generates Code:** The LLM outputs a block of TypeScript.
-2.  **`tsalum` Filters the Build:** If a rule is violated (e.g., nesting control flows or exposing state via getters), `tsalum` throws a hard error in the build pipeline.
+2.  **`nitrous` Filters the Build:** If a rule is violated (e.g., nesting control flows or exposing state via getters), `nitrous` throws a hard error in the build pipeline.
 3.  **Self-Correction:** The LLM ingests the compiler/linter error as concrete context and is forced to refactor the code cleanly.
 
-Instead of you manually refactoring the AI's output, the AI is programmatically guided by `tsalum` to write modular, testable structures on the first pass.
+Instead of you manually refactoring the AI's output, the AI is programmatically guided by `nitrous` to write modular, testable structures on the first pass.
 
 ---
 
 ## 📜 The 9 Laws Enforced
 
-`tsalum` parses the AST of your code in [linter.ts](file:///Users/rajsekharan/projects/foundry/tech/tsalum/src/linter.ts) to verify compliance with the 9 rules of Object Calisthenics:
+`nitrous` parses the AST of your code in [linter.ts](file:///Users/rajsekharan/projects/foundry/tech/nitrous/src/linter.ts) to verify compliance with the 9 rules of Object Calisthenics:
 
 | Law | Rule Name | Description |
 | :--- | :--- | :--- |
@@ -48,7 +48,7 @@ Instead of you manually refactoring the AI's output, the AI is programmatically 
 | **8** | **Max 2 Instance Variables** | Restrict classes to at most 2 properties to ensure high cohesion. |
 | **9** | **No Getters or Setters** | Enforce "Tell, Don't Ask." Objects should expose behavior, not raw state. |
 
-For code examples and refactoring guides, read the detailed [RULES.md](file:///Users/rajsekharan/projects/foundry/tech/tsalum/docs/RULES.md).
+For code examples and refactoring guides, read the detailed [RULES.md](file:///Users/rajsekharan/projects/foundry/tech/nitrous/docs/RULES.md).
 
 ---
 
@@ -64,7 +64,7 @@ npm install
 
 ### Run the Linter
 
-You can run `tsalum` against any directory or individual file:
+You can run `nitrous` against any directory or individual file:
 
 ```bash
 # Run against the current directory
@@ -86,6 +86,6 @@ npm run build
 
 ## 🛠️ Code Structure
 
-*   [linter.ts](file:///Users/rajsekharan/projects/foundry/tech/tsalum/src/linter.ts): The core AST traversal logic that checks for Calisthenics violations.
-*   [cli.js](file:///Users/rajsekharan/projects/foundry/tech/tsalum/bin/cli.js): The CLI command interface to recursively locate files and audit them.
-*   [RULES.md](file:///Users/rajsekharan/projects/foundry/tech/tsalum/docs/RULES.md): Exhaustive guidelines on each Calisthenics law with before-and-after code blocks.
+*   [linter.ts](file:///Users/rajsekharan/projects/foundry/tech/nitrous/src/linter.ts): The core AST traversal logic that checks for Calisthenics violations.
+*   [cli.js](file:///Users/rajsekharan/projects/foundry/tech/nitrous/bin/cli.js): The CLI command interface to recursively locate files and audit them.
+*   [RULES.md](file:///Users/rajsekharan/projects/foundry/tech/nitrous/docs/RULES.md): Exhaustive guidelines on each Calisthenics law with before-and-after code blocks.
