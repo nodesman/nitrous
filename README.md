@@ -1,12 +1,12 @@
-# tsalum 💎
+# alum 💎
 
-A strict **Object Calisthenics Clarifier & Linter for TypeScript** designed to eliminate design debt at the point of creation, enabling seamless, zero-refactoring transitions from prototype to production.
+A strict **Object Calisthenics Clarifier & Linter** designed to eliminate design debt at the point of creation, enabling seamless, zero-refactoring transitions from prototype to production.
 
 ---
 
 ## 💎 The Philosophy: Clarify AI Code like Alum Purifies Water
 
-Just as **alum** is added to turbid water to cause floating microscopic impurities to coagulate and settle out into pure clarity, **`tsalum`** acts as a clarifying agent for your TypeScript codebase.
+Just as **alum** is added to turbid water to cause floating microscopic impurities to coagulate and settle out into pure clarity, **`alum`** acts as a clarifying agent for your codebase.
 
 When you build at high speed—especially when **vibe coding** with AI agents—design discipline is often sacrificed for initial momentum. AI models write code sequentially, defaulting to nested control loops, flat structures, and primitive obsession because it is contextually convenient. 
 

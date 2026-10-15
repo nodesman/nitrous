@@ -1,18 +1,1345 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛑</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BrakeTS — Object Calisthenics Linter for TypeScript</title>
-    <!-- Modern Google Fonts (Inter & JetBrains Mono) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-D8lu2SVN.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-D2pirDJU.css">
-  </head>
-  <body>
-    <div id="app"></div>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alum 💎 — Architectural Control at Scale for AI Vibe-Coding</title>
+  <meta name="description" content="Everyone is vibe-coding. What you actually need is friction. Alum enforces strict Object Calisthenics to eliminate AI code rot and break frontier model dependency.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+  
+  <!-- Modern Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #030303;
+      --bg-surface: #080808;
+      --bg-card: #0d0d0d;
+      --bg-card-hover: #141414;
+      --border: #1a1a1a;
+      --border-light: #2a2a2a;
+      --text: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --accent-cyan: #00f0ff;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #ef4444;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Status Banner */
+    .status-banner {
+      background: #080808;
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 1.5rem;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+    }
+    .status-banner-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .status-badge-amber {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 2px 7px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 3px;
+      color: var(--accent-amber);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+    }
+    .status-dot-amber {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+    .status-banner-link {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .status-banner-link:hover { opacity: 0.8; text-decoration: underline; }
+
+    /* Early Access Subscription Card */
+    .early-access-card {
+      background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin: 2.5rem 0 3.5rem 0;
+      max-width: 780px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .early-access-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .early-access-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .early-access-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+    .early-access-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .early-access-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+    .early-access-form {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .early-access-input {
+      flex: 1;
+      min-width: 280px;
+      background: #000;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 0.7rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .early-access-input:focus {
+      border-color: var(--accent-cyan);
+    }
+    .early-access-success {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.85rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #ddd;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    .btn-notify {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 4px;
+      color: var(--accent-cyan);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-notify:hover {
+      background: rgba(0, 240, 255, 0.16);
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+    }
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+    .brand-logo .dot { color: var(--accent-cyan); }
+    .notionworks-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .notionworks-badge:hover {
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+    .nw-mono {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    /* Edition Switcher */
+    .edition-switcher {
+      display: flex;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .edition-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.2s;
+    }
+    .edition-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .edition-tab.active {
+      color: #fff;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+    }
+    .edition-tab .badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent-cyan);
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-sm {
+      padding: 0.45rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-ghost {
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      color: #fff;
+      border-color: #444;
+    }
+    .btn-glow {
+      background: #fff;
+      color: #000;
+      border: 1px solid #fff;
+      font-weight: 700;
+    }
+    .btn-glow:hover {
+      background: #e5e5e5;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem 1.5rem;
+    }
+
+    /* Views */
+    .view-content { display: none; }
+    .view-content.active { display: block; }
+
+    /* Hero */
+    .hero {
+      padding: 3.5rem 0 4rem 0;
+      max-width: 860px;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 1.25rem;
+    }
+    .kicker .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .highlight-cyan {
+      background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lede {
+      font-size: 1.25rem;
+      color: #aaa;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 760px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 0.75rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: #fff;
+      color: #000;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #e5e5e5; }
+    .btn-secondary {
+      padding: 0.75rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: transparent;
+      color: #fff;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: #666;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Grids & Cards */
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      max-width: 720px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--border-light); }
+    .card-step {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .card-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    /* Anti-Captivity Callout Banner */
+    .anti-captivity-box {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.04) 0%, rgba(8, 8, 8, 0.8) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 6px;
+      padding: 2.2rem;
+      margin: 3.5rem 0;
+    }
+    .anti-captivity-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .anti-captivity-header h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .tag-danger {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--accent-rose);
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .anti-captivity-p {
+      color: #bbb;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-width: 820px;
+      margin-bottom: 1.25rem;
+    }
+    .anti-captivity-p strong { color: #fff; }
+
+    /* Steering Prompt Box */
+    .prompt-box {
+      background: #000;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .prompt-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .prompt-box-header span {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+    .prompt-code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #ddd;
+      background: #050505;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .btn-copy {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Rules Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 2rem 0 4rem 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    th {
+      background: var(--bg-surface);
+      padding: 0.9rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      color: #bbb;
+    }
+    tr:last-child td { border-bottom: none; }
+    td strong { color: #fff; }
+    td code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 240, 255, 0.04);
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    /* Playground */
+    .playground-box {
+      margin: 4rem 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .playground-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: #000;
+    }
+    .playground-header-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sample-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      border-radius: 4px;
+      background: #111;
+      border: 1px solid var(--border-light);
+      color: #ccc;
+      cursor: pointer;
+    }
+    .sample-btn:hover { color: #fff; border-color: #666; }
+    .playground-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 380px;
+    }
+    @media (max-width: 820px) {
+      .playground-body { grid-template-columns: 1fr; }
+    }
+    .editor-side {
+      border-right: 1px solid var(--border);
+      background: #000;
+    }
+    textarea.code-area {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      background: #000;
+      color: #e5e5e5;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      padding: 1.25rem;
+      border: none;
+      resize: vertical;
+      outline: none;
+    }
+    .diagnostics-side {
+      background: #050505;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .diag-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .diag-item {
+      padding: 0.75rem;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      margin-bottom: 0.6rem;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+    .diag-item.clean {
+      background: rgba(16, 185, 129, 0.06);
+      border-color: rgba(16, 185, 129, 0.2);
+      color: var(--accent-emerald);
+    }
+    .diag-law { color: var(--accent-rose); font-weight: 700; margin-bottom: 0.2rem; }
+
+    /* Treatise Reader */
+    .treatise-container {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    .treatise-doc {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+    }
+    .treatise-doc h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .treatise-doc h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 2.5rem 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .treatise-doc p {
+      color: #ccc;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .treatise-doc pre {
+      background: #000;
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-cyan);
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 4rem 1.5rem 2.5rem 1.5rem;
+      background: #000;
+    }
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand { max-width: 380px; }
+    .footer-brand p { color: var(--text-dim); font-size: 0.88rem; margin-top: 0.6rem; }
+    .footer-cols { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.85rem;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 0.45rem;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 3rem auto 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-area">
+        <a href="#" class="brand-logo">💎 alum<span class="dot">.</span></a>
+        <a href="https://notionworks.org/products/#alum" target="_blank" rel="noopener" class="notionworks-badge">
+          <span class="nw-mono">NW</span>
+          <span>A NotionWorks Product</span>
+        </a>
+      </div>
+
+      <!-- THE 3 EDITIONS TABS -->
+      <nav class="edition-switcher">
+        <button class="edition-tab active" data-view="vibe">
+          <span>⚡</span>
+          <span>Vibe Coder Edition</span>
+          <span class="badge">Plainspoken</span>
+        </button>
+        <button class="edition-tab" data-view="developer">
+          <span>🛠️</span>
+          <span>Developer Edition</span>
+          <span class="badge">AST Rigor</span>
+        </button>
+        <button class="edition-tab" data-view="treatise">
+          <span>📜</span>
+          <span>The Treatise</span>
+          <span class="badge">Doctrine</span>
+        </button>
+      </nav>
+
+      <div class="header-links">
+        <a href="/why-alum/" class="btn-sm btn-ghost" style="color: var(--accent-cyan); font-weight: 600;">Why Alum?</a>
+        <a href="#subscribe-section" class="btn-notify">
+          <span>🔔</span>
+          <span>Get Notified</span>
+        </a>
+        <a href="#playground-section" class="btn-sm btn-ghost">Playground</a>
+        <a href="https://github.com/nodesman/foundry" target="_blank" rel="noopener" class="btn-sm btn-glow">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- ================================================================= -->
+    <!-- VIEW 1: VIBE CODER EDITION                                        -->
+    <!-- ================================================================= -->
+    <div id="view-vibe" class="view-content active">
+      
+      <section class="hero">
+        <div class="kicker">
+          <span class="pulse"></span>
+          <span>THE UNCOMFORTABLE REALITY OF AI CODING</span>
+        </div>
+        <h1 class="hero-title">
+          Everyone is vibe coding.<br>
+          <span class="highlight-cyan">What you actually need is friction.</span>
+        </h1>
+        <p class="hero-lede">
+          AI lets you build at 200 mph until you slam into the architectural wall. 
+          Generating code is cheap—maintaining messy AI spaghetti is ruinously expensive. 
+          <strong>Alum</strong> injects automated architectural friction, stopping AI code rot before it kills your startup.
+        </p>
+        <div class="hero-actions">
+          <a href="#playground-section" class="btn-primary">Try Interactive Playground &darr;</a>
+          <button class="btn-secondary" onclick="document.querySelector('.prompt-box').scrollIntoView({behavior: 'smooth'});">Get AI Steering Prompt</button>
+        </div>
+
+        <!-- Early Access / Subscribe Box -->
+        <div id="subscribe-section" class="early-access-card">
+          <div class="early-access-header">
+            <div class="early-access-pill">
+              <span class="status-dot-amber"></span>
+              <span>PRIVATE ALPHA &bull; RELEASE DISPATCH</span>
+            </div>
+            <span class="early-access-meta">Zero Marketing Fluff &bull; Release Alert Only</span>
+          </div>
+          <h3 class="early-access-title">Get notified when Alum CLI &amp; Cloud Gateway drop</h3>
+          <p class="early-access-desc">
+            We are currently testing with selected codebases. Enter your email to be notified the moment the CLI binary is published and API tokens are issued.
+          </p>
+          <form id="subscribeForm" class="early-access-form" onsubmit="handleSubscribe(event)">
+            <input type="email" id="subscriberEmail" class="early-access-input" placeholder="Enter work email (e.g. dev@company.com)" required autocomplete="email" />
+            <button type="submit" id="subscribeBtn" class="btn-primary" style="white-space: nowrap;">
+              <span>Notify Me on Launch</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+          <div id="subscribeSuccess" class="early-access-success" style="display: none;">
+            <span style="color: var(--accent-emerald); font-weight: 700;">✓ Subscribed.</span> Your email is registered for early access. You will receive the CLI release binary and API token dispatch as soon as public enrollment opens.
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Alum Feature Banner -->
+      <div style="background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%); border: 1px solid var(--border-light); border-radius: 8px; padding: 2.25rem 2.5rem; margin: 3rem 0; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="max-width: 650px;">
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.4rem; letter-spacing: 0.06em;">ARCHITECTURAL DOCTRINE</div>
+          <h2 style="font-size: 1.55rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Why Alum? The Anatomy of an AI Code Collapse</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+            Why every AI app feels effortless on Monday and impossible to change by Friday. Explore the 4 stages of AI code rot and how mechanical AST invariants break frontier model captivity.
+          </p>
+        </div>
+        <div>
+          <a href="/why-alum/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; text-decoration: none;">
+            <span>Read "Why Alum?" &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Prompt Box -->
+      <div class="prompt-box">
+        <div class="prompt-box-header">
+          <span>⚡ Universal AI Steering Prompt (Cursor / Claude / ChatGPT)</span>
+          <span class="tag-danger" style="background: rgba(0,240,255,0.1); color: var(--accent-cyan);">Copy &amp; Paste</span>
+        </div>
+        <pre class="prompt-code" id="vibe-prompt-text">You must adhere strictly to the Alum architectural invariants:
+1. Max 1 level of indentation per function (use early-return guard clauses; never use the 'else' keyword).
+2. Wrap raw primitives (strings, numbers) in semantic value classes or types.
+3. Keep all functions under 15 lines and classes under 60 lines.
+4. Adhere to Tell, Don't Ask: expose behavior, never raw state or public getters.
+5. If any rule is violated, immediately refactor into decoupled helper objects before returning code.</pre>
+        <button class="btn-copy" onclick="navigator.clipboard.writeText(document.getElementById('vibe-prompt-text').innerText); alert('Steering prompt copied to clipboard!');">📋 Copy Prompt to Clipboard</button>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 2: DEVELOPER EDITION                                         -->
+    <!-- ================================================================= -->
+    <div id="view-developer" class="view-content">
+      
+      <section class="hero">
+        <div class="kicker">
+          <span class="pulse"></span>
+          <span>DETERMINISTIC ARCHITECTURAL GOVERNANCE</span>
+        </div>
+        <h1 class="hero-title">
+          Object Calisthenics &amp; AST Invariants<br>
+          <span class="highlight-cyan">for High-Acuity Engineering.</span>
+        </h1>
+        <p class="hero-lede">
+          Derived from Jeff Bay's ThoughtWorks axioms and AST static analysis. 
+          Alum acts like chemical alum precipitating impurities from turbid water—eliminating primitive obsession, mock theater, and Demeter violations at the AST parser boundary.
+        </p>
+      </section>
+
+      <h2 class="section-title">The 9 Mathematical Laws of Alum</h2>
+      <p class="section-desc">Evaluated directly against the Abstract Syntax Tree (AST) at commit and CI time.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Law Name</th>
+              <th>AST Invariant</th>
+              <th>Architectural Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01</strong></td>
+              <td><strong>One Level of Indentation</strong></td>
+              <td><code>MethodDeclaration depth &le; 1</code></td>
+              <td>Eliminates cyclomatic complexity. Forces extraction of nested conditionals into cohesive helper methods.</td>
+            </tr>
+            <tr>
+              <td><strong>02</strong></td>
+              <td><strong>Don't Use "ELSE"</strong></td>
+              <td><code>ElseStatement count == 0</code></td>
+              <td>Forces early-return Guard Clauses and polymorphic dispatch. Prevents bifurcated state bugs.</td>
+            </tr>
+            <tr>
+              <td><strong>03</strong></td>
+              <td><strong>Wrap All Primitives</strong></td>
+              <td>No raw <code>string</code> or <code>number</code> fields</td>
+              <td>Eliminates Primitive Obsession. Encapsulates validation and domain invariants in Value Objects (e.g., <code>EmailAddress</code>, <code>Money</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>04</strong></td>
+              <td><strong>First-Class Collections</strong></td>
+              <td>Classes containing arrays hold 0 other state</td>
+              <td>Collection manipulation logic belongs to the collection aggregate, not smeared across domain services.</td>
+            </tr>
+            <tr>
+              <td><strong>05</strong></td>
+              <td><strong>One Dot Per Line</strong></td>
+              <td><code>PropertyAccess depth &le; 1</code></td>
+              <td>Strict Law of Demeter. Talk only to immediate friends (<code>a.b()</code>), never transitively (<code>a.b.c.d()</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>06</strong></td>
+              <td><strong>Don't Abbreviate</strong></td>
+              <td><code>Identifier.length &gt; 2</code> (except <code>i, j</code>)</td>
+              <td>Self-documenting ubiquitous language. Code is read 100x more frequently than it is written.</td>
+            </tr>
+            <tr>
+              <td><strong>07</strong></td>
+              <td><strong>Keep Entities Small</strong></td>
+              <td>Function &lt; 15 lines; Class &lt; 60 lines</td>
+              <td>Guarantees micro-cohesion and fits entire methods into immediate human or LLM attention windows.</td>
+            </tr>
+            <tr>
+              <td><strong>08</strong></td>
+              <td><strong>Max 2 Instance Variables</strong></td>
+              <td><code>PropertyDeclaration count &le; 2</code></td>
+              <td>Forces strict decomposition of monolithic God classes into small, composed aggregates.</td>
+            </tr>
+            <tr>
+              <td><strong>09</strong></td>
+              <td><strong>No Getters or Setters</strong></td>
+              <td><code>GetAccessor | SetAccessor == 0</code></td>
+              <td>"Tell, Don't Ask." Objects expose behavioral commands, never raw state. Eliminates anemic domain models.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Testing Spec -->
+      <h2 class="section-title">The Detroit-School Test Engine (alum-spec)</h2>
+      <p class="section-desc">Zero mocks. Zero spies. Zero AST monkey-patching. Just pure state contracts.</p>
+
+      <div class="grid-4" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <div class="card-step">PHASE 01</div>
+          <h3 class="card-title">setup()</h3>
+          <p class="card-body">Prepares isolated, stateful in-memory fakes. Zero shared mutable state across test boundaries.</p>
+        </div>
+        <div class="card">
+          <div class="card-step">PHASE 02</div>
+          <h3 class="card-title">run(context)</h3>
+          <p class="card-body">Executes the domain action and returns the entire resulting world as a plain observable object.</p>
+        </div>
+        <div class="card">
+          <div class="card-step">PHASE 03</div>
+          <h3 class="card-title">expect: structural diff</h3>
+          <p class="card-body">Evaluates actual vs expected in a unified diff. Partial matching by default; <code>expectStrict()</code> for security DTOs.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 3: THE TREATISE READER                                      -->
+    <!-- ================================================================= -->
+    <div id="view-treatise" class="view-content">
+      <div class="treatise-container">
+        <div class="treatise-doc">
+          <div class="kicker" style="color: var(--accent-rose);">
+            <span class="pulse" style="background: var(--accent-rose); box-shadow: 0 0 10px var(--accent-rose);"></span>
+            <span>NOTIONWORKS INSTITUTIONAL DOCTRINE</span>
+          </div>
+          <h1>Architectural Guardrails, Invariant Enforcement, and Verification Cages</h1>
+          <p style="font-size: 1.15rem; color: #fff; font-weight: 500; margin-bottom: 2rem;">
+            Software systems decay when architectural constraints exist only as human conventions. In human teams and autonomous agentic coding workflows, unconstrained development leads to two systemic failure modes: the "one-shot" defect and "regression ping-pong".
+          </p>
+
+          <h2>1. The Two Failure Modes of AI Coding</h2>
+          <p>
+            When autonomous coding agents attempt to fix complex defects without mechanical boundaries, they fall into <strong>regression ping-pong</strong>, where resolving one failing test causes another to fail, leading to repetitive or unhelpful modifications.
+          </p>
+          <p>
+            Furthermore, a 2025 study examining 251 agent-generated patches that successfully passed the SWE-bench Full test suite revealed that <strong>63.75% of the fixes were suspicious</strong>. In 32.67% of cases, solutions leaked directly into issue descriptions, or weak assertions allowed incomplete patches to pass without satisfying original requirements.
+          </p>
+
+          <h2>2. The Anti-Captivity Argument</h2>
+          <p>
+            We cannot leave it to frontier closed models to define what is feasible or create permanent dependency on them for project continuation. 
+            When code is allowed to sprawl into unstructured, 2,000-line spaghetti files, companies become completely dependent on mega-lab reasoning models.
+          </p>
+          <p>
+            By strictly enforcing micro-functions (&lt;15 lines), zero nesting (&le;1 depth), and wrapped primitives, Alum ensures every module fits into minimal context windows. 
+            This enables full maintenance and development using fast, cost-effective commodity models (such as Gemini 3.5 Flash) or local open-weights LLMs.
+          </p>
+
+          <h2>3. Living Fitness Functions &amp; Via Negativa</h2>
+          <p>
+            Top-tier engineering organizations prevent structural drift by converting architecture into executable code:
+          </p>
+          <pre><code># Architectural Guardrails Invariant (Semgrep / Alum AST)
+rules:
+  - id: block-direct-db-access-in-domain
+    severity: ERROR
+    message: "Business models must use Repository interfaces rather than calling database drivers directly."
+    paths:
+      include: ["src/domain/**"]
+    patterns:
+      - pattern-either:
+          - pattern: import psycopg2
+          - pattern: import sqlalchemy</code></pre>
+
+          <h2>4. Ratcheting Quality Gates</h2>
+          <p>
+            A mechanical ratchet ensures that system quality metrics can advance or hold steady, but can never decline. Existing debt is recorded into a baseline; any new violation halts continuous integration.
+          </p>
+          <p style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+            <a href="https://notionworks.org/treatise/" target="_blank" rel="noopener" style="color: var(--accent-cyan); font-family: var(--font-mono); text-decoration: none;">
+              Read the Full NotionWorks Treatise of Resolution &rarr;
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- INTERACTIVE PLAYGROUND (UNIVERSAL)                                 -->
+    <!-- ================================================================= -->
+    <div id="playground-section" class="playground-box">
+      <div class="playground-header">
+        <span class="playground-header-title">💎 Alum Invariant Playground</span>
+        <div>
+          <button class="sample-btn" id="btn-load-bad">❌ Load AI Vibe-Coded Spaghetti</button>
+          <button class="sample-btn" id="btn-load-good">✅ Load Clean Alum Code</button>
+        </div>
+      </div>
+      <div class="playground-body">
+        <div class="editor-side">
+          <textarea id="code-editor" class="code-area" spellcheck="false"></textarea>
+        </div>
+        <div class="diagnostics-side">
+          <div class="diag-title">Live Alum Diagnostics</div>
+          <div id="diag-results"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="brand-logo">💎 alum<span class="dot">.</span></a>
+        <p>Architectural control at scale for AI vibe-coding and modern engineering. A sovereign pickaxe by NotionWorks.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>NotionWorks Fleet</h4>
+          <a href="https://notionworks.org/products/#lumen">Lumen Canvas</a>
+          <a href="https://notionworks.org/products/#anvil">Anvil Code Forge</a>
+          <a href="https://notionworks.org/products/#tungsten">Tungsten</a>
+          <a href="https://notionworks.org/products/#alum">Alum Pickaxe</a>
+        </div>
+        <div class="footer-col">
+          <h4>Deployment</h4>
+          <a href="https://alum.pages.dev">alum.pages.dev</a>
+          <a href="https://github.com/nodesman/foundry">Foundry Monorepo</a>
+          <a href="https://notionworks.org">notionworks.org</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 NotionWorks Inc. All Rights Reserved.</span>
+      <span>Aram (அறம்) Protocol &bull; Deterministic Software Governance</span>
+    </div>
+  </footer>
+
+  <!-- Clean, Zero-Dependency Client Script -->
+  <script>
+    // Tab Switching Logic
+    const tabs = document.querySelectorAll('.edition-tab');
+    const views = document.querySelectorAll('.view-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        views.forEach(v => v.classList.remove('active'));
+
+        tab.classList.add('active');
+        const targetView = document.getElementById('view-' + tab.dataset.view);
+        if (targetView) targetView.classList.add('active');
+      });
+    });
+
+    // Sample Code Examples
+    const SAMPLES = {
+      bad: `// ❌ AI Vibe-Coded Spaghetti (Multiple Violations)
+class OrderProcessor {
+  public id: string; // Law 3: Raw Primitive
+  public total: number; // Law 3: Raw Primitive
+  public items: any[]; // Law 4: Collection mixed with other state
+  public status: string; // Law 3
+
+  constructor(id: string, total: number, items: any[], status: string) {
+    this.id = id;
+    this.total = total;
+    this.items = items;
+    this.status = status;
+  }
+
+  // Law 1 (Nesting > 1) & Law 2 (Else keyword) & Law 7 (Function length)
+  public process(role: string, bal: number): boolean {
+    if (this.status === 'pending') {
+      if (this.total > 0) {
+        if (bal >= this.total) {
+          if (role === 'admin') {
+            this.status = 'approved_priority';
+            return true;
+          } else {
+            this.status = 'approved';
+            return true;
+          }
+        } else {
+          console.log('Insufficient balance');
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  // Law 9: Getters & Setters
+  public getStatus(): string {
+    return this.status;
+  }
+}`,
+      good: `// ✅ Clean Alum Refactored Architecture
+class OrderId {
+  constructor(private readonly value: string) {}
+}
+
+class Money {
+  constructor(private readonly amount: number) {}
+  public canCover(other: Money): boolean {
+    return this.amount >= other.amount;
+  }
+}
+
+// Law 4: First Class Collection
+class OrderItems {
+  constructor(private readonly items: any[]) {}
+}
+
+// Law 8: Max 2 instance variables per class
+class OrderDetails {
+  constructor(
+    public readonly id: OrderId,
+    public readonly total: Money
+  ) {}
+}
+
+class OrderProcessor {
+  private status: string = 'pending';
+  constructor(private readonly details: OrderDetails) {}
+
+  // Law 1: 1 level of nesting, Law 2: No else keywords
+  public process(role: string, balance: Money): boolean {
+    if (this.status !== 'pending') return false;
+    if (!balance.canCover(this.details.total)) return false;
+
+    this.status = role === 'admin' ? 'approved_priority' : 'approved';
+    return true;
+  }
+}`
+    };
+
+    const editor = document.getElementById('code-editor');
+    const diagResults = document.getElementById('diag-results');
+
+    function analyzeCode(code) {
+      const violations = [];
+      const lines = code.split('\n');
+
+      lines.forEach((line, idx) => {
+        const trimmed = line.trim();
+
+        // Law 2: No else
+        if (/\belse\b/.test(trimmed)) {
+          violations.push({
+            law: "Law 2: Don't Use \"ELSE\"",
+            desc: "Line " + (idx + 1) + ": Found 'else' keyword. Refactor using early-return Guard Clauses."
+          });
+        }
+
+        // Law 9: No getters
+        if (/\b(get|set)\s+[a-zA-Z0-9_]+\s*\(/.test(trimmed) || /public\s+get[A-Z]/.test(trimmed)) {
+          violations.push({
+            law: 'Law 9: No Getters or Setters',
+            desc: "Line " + (idx + 1) + ": Found getter/setter. Objects must expose behavior, never raw state."
+          });
+        }
+
+        // Law 1: Nesting check
+        const matchIndent = line.match(/^(\s*)/);
+        const spaces = matchIndent ? matchIndent[1].length : 0;
+        if (/if\s*\(/.test(trimmed) && spaces > 6) {
+          violations.push({
+            law: 'Law 1: One Level of Indentation',
+            desc: "Line " + (idx + 1) + ": Deeply nested control flow. Extract helper functions."
+          });
+        }
+
+        // Law 3: Primitive fields
+        if (/public\s+\w+:\s*(string|number|boolean);/.test(trimmed)) {
+          violations.push({
+            law: 'Law 3: Wrap All Primitives',
+            desc: "Line " + (idx + 1) + ": Raw primitive exposed. Wrap in domain Value Object."
+          });
+        }
+      });
+
+      // Render diagnostics
+      if (violations.length === 0) {
+        diagResults.innerHTML = `
+          <div class="diag-item clean">
+            <div class="diag-law" style="color: var(--accent-emerald);">✅ Pristine Alum Architecture</div>
+            <div>Code satisfies all 9 Calisthenic Invariants. Zero technical debt detected.</div>
+          </div>
+        `;
+      } else {
+        diagResults.innerHTML = violations.map(v => `
+          <div class="diag-item">
+            <div class="diag-law">🛑 ${v.law}</div>
+            <div>${v.desc}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    editor.value = SAMPLES.bad;
+    analyzeCode(SAMPLES.bad);
+
+    editor.addEventListener('input', () => {
+      analyzeCode(editor.value);
+    });
+
+    document.getElementById('btn-load-bad').addEventListener('click', () => {
+      editor.value = SAMPLES.bad;
+      analyzeCode(SAMPLES.bad);
+    });
+
+    document.getElementById('btn-load-good').addEventListener('click', () => {
+      editor.value = SAMPLES.good;
+      analyzeCode(SAMPLES.good);
+    });
+
+    // Handle early access subscription
+    window.handleSubscribe = function(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('subscriberEmail');
+      const email = (emailInput.value || '').trim();
+      if (!email || !email.includes('@')) return;
+
+      const btn = document.getElementById('subscribeBtn');
+      const form = document.getElementById('subscribeForm');
+      const success = document.getElementById('subscribeSuccess');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>Registering...</span>';
+
+      try {
+        const subs = JSON.parse(localStorage.getItem('alum_subscribers') || '[]');
+        if (!subs.includes(email)) {
+          subs.push({ email: email, timestamp: new Date().toISOString() });
+          localStorage.setItem('alum_subscribers', JSON.stringify(subs));
+        }
+      } catch (err) {}
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }, 400);
+    };
+  </script>
+</body>
 </html>

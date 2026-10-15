@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Alum? — The Anatomy of an AI Code Collapse &amp; The Anti-Captivity Mandate</title>
+  <meta name="description" content="Why every AI app feels effortless on Monday and impossible to change by Friday. Discover the 4 stages of AI code collapse and why mechanical friction is necessary.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+  
+  <!-- Modern Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #030303;
+      --bg-surface: #080808;
+      --bg-card: #0d0d0d;
+      --bg-card-hover: #141414;
+      --border: #1a1a1a;
+      --border-light: #2a2a2a;
+      --text: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --accent-cyan: #00f0ff;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #ef4444;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+    .brand-logo .dot { color: var(--accent-cyan); }
+    .notionworks-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .notionworks-badge:hover {
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+    .nw-mono { color: var(--accent-cyan); font-weight: 700; }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-ghost {
+      color: var(--text-muted);
+      border: 1px solid transparent;
+    }
+    .btn-ghost:hover {
+      color: #fff;
+      border-color: var(--border-light);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .btn-glow {
+      background: rgba(0, 240, 255, 0.08);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+    }
+    .btn-glow:hover {
+      background: rgba(0, 240, 255, 0.16);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+    }
+
+    /* Main Container */
+    .article-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem 1.5rem;
+    }
+
+    /* Hero */
+    .essay-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      animation: pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+    .essay-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .highlight-cyan {
+      background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .essay-lede {
+      font-size: 1.25rem;
+      color: #bbb;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+      border-left: 2px solid var(--accent-cyan);
+      padding-left: 1.25rem;
+    }
+
+    /* Stage Cards */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 2.5rem 0 4rem 0;
+    }
+    .stage-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      transition: all 0.25s ease;
+    }
+    .stage-card:hover {
+      border-color: var(--border-light);
+      background: var(--bg-card-hover);
+    }
+    .stage-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+    .stage-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .stage-body {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .stage-symptom {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: #000;
+      border-radius: 4px;
+      border-left: 3px solid var(--border-light);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #ccc;
+    }
+
+    /* Section Styles */
+    .prose-section {
+      margin: 4.5rem 0;
+    }
+    .prose-section h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+    .prose-section p {
+      color: #ccc;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.35rem;
+    }
+    .prose-section strong {
+      color: #fff;
+    }
+
+    /* Anti-Captivity Box */
+    .anti-captivity-box {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, rgba(8, 8, 8, 0.9) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 2.5rem;
+      margin: 3.5rem 0;
+    }
+    .anti-captivity-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .tag-danger {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--accent-rose);
+      border-radius: 3px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .anti-captivity-header h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    /* Comparison Table */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2.5rem 0;
+      font-size: 0.92rem;
+    }
+    .comp-table th, .comp-table td {
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .comp-table th {
+      background: #080808;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .comp-table td {
+      background: var(--bg-card);
+      color: #ccc;
+    }
+
+    /* Prompt Box */
+    .prompt-box {
+      background: #000;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 1.75rem;
+      margin: 2.5rem 0;
+    }
+    .prompt-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .prompt-box-header span {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+    .prompt-code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #ddd;
+      background: #050505;
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    /* Early Access Card */
+    .early-access-card {
+      background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 4rem 0;
+    }
+    .early-access-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .early-access-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+    .early-access-form {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .early-access-input {
+      flex: 1;
+      min-width: 260px;
+      background: #000;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #fff;
+      outline: none;
+    }
+    .early-access-input:focus { border-color: var(--accent-cyan); }
+    .btn-primary {
+      background: #fff;
+      color: #000;
+      border: 1px solid #fff;
+      padding: 0.75rem 1.4rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem 2rem 1.5rem;
+      background: #000;
+    }
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-inner a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .footer-inner a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-area">
+        <a href="/" class="brand-logo">💎 alum<span class="dot">.</span></a>
+        <a href="https://notionworks.org/products/#alum" target="_blank" rel="noopener" class="notionworks-badge">
+          <span class="nw-mono">NW</span>
+          <span>A NotionWorks Product</span>
+        </a>
+      </div>
+
+      <div class="header-links">
+        <a href="/" class="btn-sm btn-ghost">&larr; Console &amp; Playground</a>
+        <a href="/#treatise" class="btn-sm btn-ghost">The Treatise</a>
+        <a href="https://github.com/nodesman/foundry" target="_blank" rel="noopener" class="btn-sm btn-glow">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Container -->
+  <main class="article-container">
+
+    <div class="essay-kicker">
+      <span class="pulse-dot"></span>
+      <span>ARCHITECTURAL DOCTRINE &bull; ESSAY</span>
+    </div>
+
+    <h1 class="essay-title">
+      Why Alum?<br>
+      <span class="highlight-cyan">The Anatomy of an AI Code Collapse.</span>
+    </h1>
+
+    <p class="essay-lede">
+      Everyone is vibe-coding. AI enables software creation at 200 mph until you slam into the architectural wall. 
+      Generating code is cheap—maintaining messy AI spaghetti is ruinously expensive. 
+      Here is why unconstrained code collapses, and why mechanical AST friction is the only permanent solution.
+    </p>
+
+    <!-- The 4 Stages -->
+    <h2 style="font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">The Four Stages of AI Code Decay</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">How effortless prototypes decay into untestable, fragile monoliths within days.</p>
+
+    <div class="stages-grid">
+      
+      <!-- Stage 1 -->
+      <div class="stage-card">
+        <div class="stage-badge" style="color: var(--accent-emerald);">STAGE 01 &bull; 100% EUPHORIA</div>
+        <h3 class="stage-title">The Vibe-Coding High</h3>
+        <p class="stage-body">
+          You type intent into Cursor, Claude Code, or Windsurf. Code materializes instantly. The frontend looks polished, database migrations execute, and an entire working SaaS prototype emerges in a single afternoon. You feel invulnerable—traditional software engineering feels obsolete.
+        </p>
+        <div class="stage-symptom">
+          Symptom: Velocity is infinite. Architecture is completely ignored. Zero tests exist.
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-card">
+        <div class="stage-badge" style="color: var(--accent-amber);">STAGE 02 &bull; INVISIBLE ROT</div>
+        <h3 class="stage-title">The Hidden Creep</h3>
+        <p class="stage-body">
+          Feature additions begin sprawling across the codebase. Because autonomous coding agents prioritize generating immediate working syntax over structural design, files quietly swell past 800 lines. The agent nests conditional logic 4 to 5 levels deep, handles error states by slapping on <code>else if</code> cascades, and passes raw primitive strings across decoupled boundaries.
+        </p>
+        <div class="stage-symptom">
+          Symptom: Diff size balloons. Methods take 6 arguments. God objects accumulate all business logic.
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-card">
+        <div class="stage-badge" style="color: var(--accent-rose);">STAGE 03 &bull; ZERO VELOCITY</div>
+        <h3 class="stage-title">The Refactoring Wall</h3>
+        <p class="stage-body">
+          Modifying a simple payment checkout button inexplicably breaks session authentication. You ask the AI to fix it: the model hallucinates, overwrites critical business logic, re-introduces previously solved bugs, and produces cyclic dependencies. Context windows choke. The developer spends 8 hours prompting in circles trying to undo the damage, eventually wanting to scrap the repository and start over.
+        </p>
+        <div class="stage-symptom">
+          Symptom: Negative velocity. Every prompt causes 3 regressions. Founder desperation peaks.
+        </div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="stage-card">
+        <div class="stage-badge" style="color: var(--accent-cyan);">STAGE 04 &bull; PERMANENCE</div>
+        <h3 class="stage-title">The Alum Cure</h3>
+        <p class="stage-body">
+          Alum rejects untidy code mechanically at the AST layer before it is ever committed. It serves as an external verification cage that coding agents invoke directly. By forbidding more than 1 level of indentation, banning <code>else</code>, and requiring wrapped domain primitives, Alum forces the agent to self-correct and refactor code into clean, micro-modular components on the fly.
+        </p>
+        <div class="stage-symptom">
+          Result: High velocity remains durable. Codebase remains legible and modular indefinitely.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section: The Anti-Captivity Mandate -->
+    <section class="anti-captivity-box">
+      <div class="anti-captivity-header">
+        <span class="tag-danger">CRITICAL STRATEGY</span>
+        <h3>The Anti-Captivity Mandate: Stop Renting Your Architecture</h3>
+      </div>
+      <p style="color: #ccc; font-size: 1.05rem; line-height: 1.75; margin-bottom: 1.25rem;">
+        The mega-labs want you to believe that <em>"bigger context windows and frontier reasoning models will fix your messy code."</em>
+        <strong style="color: #fff;">This is cognitive feudalism.</strong>
+      </p>
+      <p style="color: #ccc; font-size: 1.05rem; line-height: 1.75; margin-bottom: 1.25rem;">
+        When your codebase is composed of 1,500-line God objects and tangled dependencies, lightweight models choke. 
+        You become <strong style="color: #fff;">permanently captive to expensive closed frontier models ($20/M tokens)</strong> just to make a routine bug fix. 
+        If mega-labs raise prices, rate-limit your keys, or suffer outages, your engineering operations halt.
+      </p>
+      <p style="color: #ccc; font-size: 1.05rem; line-height: 1.75;">
+        <strong style="color: #00f0ff;">Alum breaks the trap:</strong> By mechanically enforcing micro-functions (&lt;15 lines) and bounded Value Objects, 
+        every unit of your code fits cleanly into small, fast context windows. 
+        <strong style="color: #fff;">You can run, maintain, and evolve your entire system using hyper-efficient, commodity models like Gemini 3.5 Flash or local 8B LLMs for pennies.</strong>
+      </p>
+    </section>
+
+    <!-- Comparison Matrix -->
+    <div class="prose-section">
+      <h2>Architectural Model Comparison</h2>
+      <p>Comparing raw unconstrained AI code generation against Alum-governed architecture:</p>
+      
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Unconstrained Vibe-Coding</th>
+            <th>Alum Governed Architecture</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Indentation Depth</strong></td>
+            <td>Unlimited (4–6 nested levels)</td>
+            <td>Strict Maximum: 1 Level</td>
+          </tr>
+          <tr>
+            <td><strong>Conditionals</strong></td>
+            <td>Sprawling <code>else if</code> cascades</td>
+            <td>Zero <code>else</code> keywords (Polymorphism / Early Return)</td>
+          </tr>
+          <tr>
+            <td><strong>Domain Types</strong></td>
+            <td>Raw primitives (<code>string</code>, <code>number</code> everywhere)</td>
+            <td>Wrapped Domain Value Objects</td>
+          </tr>
+          <tr>
+            <td><strong>File Sizes</strong></td>
+            <td>God classes (500–2,000 lines)</td>
+            <td>Micro-modules (&le;200 lines max)</td>
+          </tr>
+          <tr>
+            <td><strong>Model Dependency</strong></td>
+            <td>Locked into $20/M token frontier models</td>
+            <td>Commodity &amp; local models (Gemini 3.5 Flash, 8B SLMs)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Agent Harness Prompt Box -->
+    <div class="prose-section">
+      <h2>How Autonomous Agents Consume Alum</h2>
+      <p>
+        Alum is designed from first principles as an external CLI instrument that agents like Claude Code or Cursor invoke in the terminal. Here is the instruction stencil developers stamp into <code>CLAUDE.md</code> or <code>AGENTS.md</code>:
+      </p>
+
+      <div class="prompt-box">
+        <div class="prompt-box-header">
+          <span>CLAUDE.md / AGENTS.md STENCIL</span>
+          <button class="btn-sm btn-ghost" onclick="navigator.clipboard.writeText(document.getElementById('promptText').innerText); this.innerText='Copied!';">Copy Stencil</button>
+        </div>
+        <div class="prompt-code" id="promptText"># Architectural Invariant Verification Cage (Alum)
+Before presenting any code diff or declaring a task complete, you MUST execute:
+`alum audit --context src/`
+
+Rules Enforced by Alum AST Governor:
+1. Max 1 level of indentation per method.
+2. ZERO use of the 'else' keyword. Use guard clauses or polymorphism.
+3. Wrap all primitives into domain Value Objects.
+4. First-class collections only.
+5. Max 2 instance variables per class.
+
+If `alum audit` exits with code &gt; 0, you must refactor the implementation until all invariants pass with exit code 0. Do NOT attempt to disable or bypass the governor.</div>
+      </div>
+    </div>
+
+    <!-- Early Access Subscription Form -->
+    <div class="early-access-card" id="subscribe-section">
+      <div class="early-access-header">
+        <div class="early-access-pill">
+          <span class="pulse-dot"></span>
+          <span>PRIVATE ALPHA &bull; RELEASE DISPATCH</span>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">Zero Marketing Fluff &bull; Direct Release Alert</span>
+      </div>
+      <h3 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Get notified when Alum CLI &amp; Cloud Gateway drop</h3>
+      <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.5;">
+        Be the first to receive the compiled CLI binaries, API access keys, and the full <code>CLAUDE.md</code> agent harness when public enrollment opens.
+      </p>
+      <form class="early-access-form" id="whySubscribeForm" onsubmit="handleWhySubscribe(event)">
+        <input type="email" id="whyEmail" class="early-access-input" placeholder="Enter work email (e.g. dev@company.com)" required autocomplete="email" />
+        <button type="submit" id="whyBtn" class="btn-primary">
+          <span>Notify Me on Launch</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+      <div id="whySuccess" style="display: none; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.85rem 1.2rem; border-radius: 4px; font-size: 0.88rem; color: #ddd; margin-top: 1rem;">
+        <span style="color: var(--accent-emerald); font-weight: 700;">✓ Subscribed.</span> Your email is registered for early access. We will dispatch the CLI release binary directly to your inbox.
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <span>💎 ALUM &bull; AN ARCHITECTURAL INVARIANT GOVERNOR</span>
+      </div>
+      <div>
+        <a href="/">Console</a> &bull;
+        <a href="/why-alum/">Why Alum?</a> &bull;
+        <a href="/#treatise">Treatise</a> &bull;
+        <a href="https://notionworks.org">NotionWorks</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleWhySubscribe(e) {
+      e.preventDefault();
+      const input = document.getElementById('whyEmail');
+      const email = (input.value || '').trim();
+      if (!email || !email.includes('@')) return;
+
+      const btn = document.getElementById('whyBtn');
+      const form = document.getElementById('whySubscribeForm');
+      const success = document.getElementById('whySuccess');
+
+      btn.disabled = true;
+      btn.innerText = 'Registering...';
+
+      try {
+        const subs = JSON.parse(localStorage.getItem('alum_subscribers') || '[]');
+        if (!subs.some(s => (typeof s === 'string' ? s : s.email) === email)) {
+          subs.push({ email: email, timestamp: new Date().toISOString(), source: 'why-alum' });
+          localStorage.setItem('alum_subscribers', JSON.stringify(subs));
+        }
+      } catch (err) {}
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }, 400);
+    }
+  </script>
+</body>
+</html>

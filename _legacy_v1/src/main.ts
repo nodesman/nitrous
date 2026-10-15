@@ -122,16 +122,16 @@ const MAIN_CONTENT_HTML = `
     <!-- HOME SCREEN (STRIKING LANDING PAGE) -->
     <div id="screen-home" class="tab-screen active">
       <div class="doc-page">
-        <!-- Motorsport Quote Hero -->
-        <div style="border-left: 3px solid var(--error); padding: 1.5rem 0 1.5rem 2rem; margin: 1.5rem 0 3rem 0; background: rgba(239, 68, 68, 0.02);">
+        <!-- Water Clarification Quote Hero -->
+        <div style="border-left: 3px solid var(--accent); padding: 1.5rem 0 1.5rem 2rem; margin: 1.5rem 0 3rem 0; background: rgba(59, 130, 246, 0.02);">
           <blockquote style="font-size: 1.6rem; font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; color: var(--text-primary);">
-            "In motorsport, brakes are not designed to make you go slow—they are what allow you to go fast safely."
+            "Just as alum precipitates impurities from turbid water, strict structural constraints clarify raw code into pristine architecture."
           </blockquote>
         </div>
 
         <div class="doc-section">
           <h1 style="font-size: 2.8rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.5rem;">
-            AI writes code at 200 mph.<br>You need a Brake.
+            AI writes code at 200 mph.<br>You need a Clarifying Agent.
           </h1>
           
           <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; max-width: 720px;">
