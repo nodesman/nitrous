@@ -1014,44 +1014,9 @@
         </div>
       </div>
 
-      <!-- Selectable Test-Lint Anti-Slop Rules -->
-      <h2 class="section-title" style="margin-top: 3.5rem;">Selectable Test-Lint Rules (nitrous test-lint)</h2>
-      <p class="section-desc">Selectable violation rules that block AI agents from padding test suites with brittle string greps and tautological setter echoes.</p>
-
-      <div class="grid-4" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 2rem;">
-        <div class="card" style="border-color: rgba(239, 68, 68, 0.35);">
-          <div class="card-step" style="color: var(--accent-rose);">TEST LINT 01 &bull; [no-brittle-style-grep]</div>
-          <h3 class="card-title">Brittle Style &amp; Config String Assertions</h3>
-          <p class="card-body" style="margin-bottom: 1rem;">
-            Flags and rejects unit tests that grep static CSS/QSS/config strings for hardcoded visual tokens instead of verifying runtime behavior.
-          </p>
-          <pre class="prompt-code" style="font-size: 0.78rem; padding: 0.85rem; margin-bottom: 0.85rem;">// ❌ VIOLATION in test_theme_engine.h:
-assert(qss.contains("border-radius: 15px"));
-assert(qss.contains("border-radius: 13px"));
-assert(qss.contains("#2d333b"));
-assert(qss.contains("rgba(255, 255, 255, 0.10)"));</pre>
-          <p class="card-body" style="font-size: 0.84rem; color: #bbb;">
-            <strong>Why Nitrous drops this:</strong> This is literally grepping a CSS file inside a C++ or TS unit test. It tests nothing about whether the UI runtime actually parsed the stylesheet or applied it to the widgets.
-          </p>
-        </div>
-
-        <div class="card" style="border-color: rgba(245, 158, 11, 0.35);">
-          <div class="card-step" style="color: var(--accent-amber);">TEST LINT 02 &bull; [no-tautological-config-echo]</div>
-          <h3 class="card-title">Tautological Setter &amp; Config Echoes</h3>
-          <p class="card-body" style="margin-bottom: 1rem;">
-            Flags and rejects exact font point/pixel/letter-spacing config checks that merely repeat a setter assignment line verbatim.
-          </p>
-          <pre class="prompt-code" style="font-size: 0.78rem; padding: 0.85rem; margin-bottom: 0.85rem;">// ❌ VIOLATION: Tautological Config Echo
-font.setPixelSize(12);
-font.setLetterSpacing(0.2);
-assert(font.pixelSize() == 12);
-assert(font.letterSpacing() == 0.2);</pre>
-          <p class="card-body" style="font-size: 0.84rem; color: #bbb;">
-            <strong>Why Nitrous drops this:</strong> Checking that <code>font.pixelSize() == 12</code> just repeats the line of code <code>font.setPixelSize(12)</code>. It verifies compiler memory assignment rather than observable domain outcomes.
-          </p>
-        </div>
-      </div>
-
+      <!-- Selectable Test-Lint Anti-Slop Rules in Developer View -->
+      <h2 class="section-title" style="margin-top: 3.5rem;">The Test Linter Engine (nitrous test-lint)</h2>
+      <p class="section-desc">Dedicated AST &amp; dataflow test linter module that audits test suites across C++/Qt, TypeScript, Python, and Rust—allowing teams to select and reject AI test-padding violations.</p>
     </div>
 
     <!-- ================================================================= -->
@@ -1117,27 +1082,112 @@ rules:
     </div>
 
     <!-- ================================================================= -->
+    <!-- UNIVERSAL MODULE: TEST LINTER (nitrous test-lint)                 -->
+    <!-- ================================================================= -->
+    <section id="test-linter-module" style="margin-top: 4rem; margin-bottom: 2.5rem;">
+      <div class="kicker" style="margin-bottom: 0.75rem;">
+        <span class="pulse"></span>
+        <span>DEDICATED MODULE &bull; NITROUS TEST-LINT ENGINE</span>
+      </div>
+      <h2 class="section-title">What We Drop: Selectable Test-Lint Violations (<code>nitrous test-lint</code>)</h2>
+      <p class="section-desc" style="max-width: 880px;">
+        When AI coding agents are forced to write unit tests, they pad test suites with brittle string greps, tautological setter echoes, and hollow coverage checks. <code>nitrous test-lint</code> lets you select and call out these exact anti-patterns as hard violations.
+      </p>
+
+      <div class="grid-4" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 1.5rem;">
+        <!-- VIOLATION 1: Brittle Style/Config String Assertions -->
+        <div class="card" style="border-color: rgba(239, 68, 68, 0.45); background: linear-gradient(180deg, rgba(239, 68, 68, 0.04) 0%, #0a0a0a 100%);">
+          <div class="card-step" style="color: var(--accent-rose);">VIOLATION 01 &bull; [no-brittle-style-grep]</div>
+          <h3 class="card-title">1. What We Drop: Brittle Style/Config String Assertions</h3>
+          <p class="card-body" style="margin-bottom: 0.75rem; color: #ddd;">
+            In <code>test_theme_engine.h</code>, the spec proposed adding:
+          </p>
+          <pre class="prompt-code" style="font-size: 0.78rem; padding: 0.9rem; margin-bottom: 0.9rem; color: #fca5a5;">assert(qss.contains("border-radius: 15px"));
+assert(qss.contains("border-radius: 13px"));
+assert(qss.contains("#2d333b"));
+assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+assert(qss.contains("border-radius: 5px"));</pre>
+          <p class="card-body" style="font-size: 0.88rem; color: #ccc; border-left: 2px solid var(--accent-rose); padding-left: 0.75rem;">
+            <strong style="color: #fff;">Why drop this:</strong> This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets.
+          </p>
+        </div>
+
+        <!-- VIOLATION 2: Exact Font Point/Pixel/Letter-Spacing Config Checks -->
+        <div class="card" style="border-color: rgba(245, 158, 11, 0.45); background: linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, #0a0a0a 100%);">
+          <div class="card-step" style="color: var(--accent-amber);">VIOLATION 02 &bull; [no-tautological-config-echo]</div>
+          <h3 class="card-title">2. What We Drop: Exact Font Point/Pixel/Letter-Spacing Config Checks</h3>
+          <p class="card-body" style="margin-bottom: 0.75rem; color: #ddd;">
+            Tautological setter/getter checks (<code>pixelSize() == 12</code>, <code>letterSpacing() == 0.2</code>):
+          </p>
+          <pre class="prompt-code" style="font-size: 0.78rem; padding: 0.9rem; margin-bottom: 0.9rem; color: #fcd34d;">font.setPixelSize(12);
+font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
+
+assert(font.pixelSize() == 12);
+assert(font.letterSpacing() == 0.2);</pre>
+          <p class="card-body" style="font-size: 0.88rem; color: #ccc; border-left: 2px solid var(--accent-amber); padding-left: 0.75rem;">
+            <strong style="color: #fff;">Why drop this:</strong> Checking that <code>font.pixelSize() == 12</code> just repeats the line of code <code>font.setPixelSize(12)</code>. It tests compiler memory assignment rather than widget layout or domain behavior.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-4" style="grid-template-columns: repeat(3, 1fr);">
+        <!-- VIOLATION 3: Mocking Theater -->
+        <div class="card">
+          <div class="card-step" style="color: var(--accent-cyan);">VIOLATION 03 &bull; [no-mocking-theater]</div>
+          <h3 class="card-title">Mocking Theater &amp; Spy Call Counts</h3>
+          <p class="card-body">
+            Drops <code>jest.mock()</code>, <code>vi.fn()</code>, and <code>toHaveBeenCalledWith()</code>. Tests that only check if a mock called another mock break on harmless refactors while passing when real state is corrupted.
+          </p>
+        </div>
+        <!-- VIOLATION 4: Vacuous Coverage Assertions -->
+        <div class="card">
+          <div class="card-step" style="color: var(--accent-cyan);">VIOLATION 04 &bull; [no-vacuous-assertions]</div>
+          <h3 class="card-title">Vacuous Coverage-Padding Checks</h3>
+          <p class="card-body">
+            Drops <code>expect(res).toBeDefined()</code>, <code>expect(true).toBe(true)</code>, and standalone <code>assert(ptr != nullptr)</code> used by agents to game 100% line coverage gates without verifying values.
+          </p>
+        </div>
+        <!-- VIOLATION 5: Zinsser Test Prose -->
+        <div class="card">
+          <div class="card-step" style="color: var(--accent-cyan);">VIOLATION 05 &bull; [zinsser-test-prose]</div>
+          <h3 class="card-title">Bureaucratic Test-Title Fillers</h3>
+          <p class="card-body">
+            Drops weak filler words (<code>should</code>, <code>properly</code>, <code>correctly</code>, <code>works as expected</code>). Enforces active present-tense verbs (<code>compiles</code>, <code>clamps</code>, <code>neutralizes</code>).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
     <!-- INTERACTIVE PLAYGROUND (UNIVERSAL)                                 -->
     <!-- ================================================================= -->
     <div id="playground-section" class="playground-box">
       <div class="playground-header" style="flex-wrap: wrap; gap: 0.75rem;">
         <span class="playground-header-title">⚡ Nitrous Invariant &amp; Test-Lint Playground</span>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="sample-btn" id="btn-load-test-slop">🧪 Load Brittle Test-Lint Slop (test_theme_engine.h)</button>
           <button class="sample-btn" id="btn-load-bad">❌ Load AI Vibe-Coded Spaghetti</button>
-          <button class="sample-btn" id="btn-load-test-slop">🧪 Load Brittle AI Test Slop</button>
           <button class="sample-btn" id="btn-load-good">✅ Load Clean Nitrous Code</button>
         </div>
       </div>
       <!-- Selectable Violation Rule Bar -->
-      <div style="background: #060606; border-bottom: 1px solid var(--border); padding: 0.65rem 1.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.76rem; color: #bbb;">
-        <span style="color: var(--accent-cyan); font-weight: 700;">SELECTABLE TEST LINTS:</span>
-        <label style="display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;">
-          <input type="checkbox" id="toggle-style-grep" checked style="accent-color: var(--accent-cyan);" />
+      <div style="background: #060606; border-bottom: 1px solid var(--border); padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.75rem; color: #bbb;">
+        <span style="color: var(--accent-cyan); font-weight: 700;">SELECT TEST-LINT VIOLATIONS TO CALL OUT:</span>
+        <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="checkbox" id="toggle-style-grep" checked style="accent-color: var(--accent-rose);" />
           <span><code>no-brittle-style-grep</code> (CSS/QSS String Grepping)</span>
         </label>
-        <label style="display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;">
-          <input type="checkbox" id="toggle-config-echo" checked style="accent-color: var(--accent-cyan);" />
-          <span><code>no-tautological-config-echo</code> (PixelSize/Setter Echoes)</span>
+        <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="checkbox" id="toggle-config-echo" checked style="accent-color: var(--accent-amber);" />
+          <span><code>no-tautological-config-echo</code> (pixelSize == 12 / letterSpacing == 0.2)</span>
+        </label>
+        <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="checkbox" id="toggle-mock-theater" checked style="accent-color: var(--accent-cyan);" />
+          <span><code>no-mocking-theater</code> (vi.fn / toHaveBeenCalled)</span>
+        </label>
+        <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="checkbox" id="toggle-vacuous" checked style="accent-color: var(--accent-cyan);" />
+          <span><code>no-vacuous-assertions</code> (toBeDefined / != nullptr)</span>
         </label>
       </div>
       <div class="playground-body">
@@ -1282,20 +1332,21 @@ class OrderProcessor {
     return true;
   }
 }`,
-      testSlop: `// ❌ AI Test-Padding Slop (test_theme_engine.h)
+      testSlop: `// ❌ test_theme_engine.h — Brittle AI Test-Padding Violations
 void testThemeEngineStylesAndConfig() {
   QString qss = ThemeEngine::loadStylesheet();
 
-  // 1. Brittle Style/Config String Assertions [no-brittle-style-grep]
-  // Literally grepping a CSS file inside a unit test!
+  // 1. What We Drop: Brittle Style/Config String Assertions [no-brittle-style-grep]
+  // Why drop this: Literally grepping a CSS file inside a C++ unit test.
+  // Tests nothing about whether Qt parsed the stylesheet or applied it to widgets.
   assert(qss.contains("border-radius: 15px"));
   assert(qss.contains("border-radius: 13px"));
   assert(qss.contains("#2d333b"));
   assert(qss.contains("rgba(255, 255, 255, 0.10)"));
   assert(qss.contains("border-radius: 5px"));
 
-  // 2. Tautological Setter/Config Echoes [no-tautological-config-echo]
-  // Repeating font.setPixelSize(12) without testing runtime layout!
+  // 2. What We Drop: Exact Font Point/Pixel/Letter-Spacing Config Checks [no-tautological-config-echo]
+  // Why drop this: Checking font.pixelSize() == 12 just repeats font.setPixelSize(12).
   QFont font = ThemeEngine::defaultFont();
   font.setPixelSize(12);
   font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
@@ -1308,12 +1359,16 @@ void testThemeEngineStylesAndConfig() {
     const diagResults = document.getElementById('diag-results');
     const toggleStyleGrep = document.getElementById('toggle-style-grep');
     const toggleConfigEcho = document.getElementById('toggle-config-echo');
+    const toggleMockTheater = document.getElementById('toggle-mock-theater');
+    const toggleVacuous = document.getElementById('toggle-vacuous');
 
     function analyzeCode(code) {
       const violations = [];
       const lines = code.split('\n');
       const checkStyleGrep = toggleStyleGrep ? toggleStyleGrep.checked : true;
       const checkConfigEcho = toggleConfigEcho ? toggleConfigEcho.checked : true;
+      const checkMockTheater = toggleMockTheater ? toggleMockTheater.checked : true;
+      const checkVacuous = toggleVacuous ? toggleVacuous.checked : true;
 
       lines.forEach((line, idx) => {
         const trimmed = line.trim();
@@ -1357,15 +1412,31 @@ void testThemeEngineStylesAndConfig() {
         if (checkStyleGrep && (/(contains|toContain|includes)\s*\(\s*["'](.*border-radius|#[0-9a-fA-F]{3,8}|rgba?\()/.test(trimmed))) {
           violations.push({
             law: 'Test Lint [no-brittle-style-grep]: Brittle Style/Config String Assertion',
-            desc: "Line " + (idx + 1) + ": Grepping raw CSS/QSS tokens ('border-radius', hex, rgba) in a unit test verifies zero widget parsing or application. Drop this."
+            desc: "Line " + (idx + 1) + ": Literally grepping a CSS/QSS file inside a unit test. Tests nothing about whether Qt/DOM parsed the stylesheet or applied it to widgets."
           });
         }
 
         // Test Lint 2: no-tautological-config-echo
         if (checkConfigEcho && (/(pixelSize|letterSpacing|pointSize)\(\)\s*==\s*[0-9.]+/.test(trimmed) || /expect\(.*\.(pixelSize|letterSpacing)\)\.toBe\([0-9.]+\)/.test(trimmed))) {
           violations.push({
-            law: 'Test Lint [no-tautological-config-echo]: Tautological Setter/Config Echo',
-            desc: "Line " + (idx + 1) + ": Asserting exact pixelSize/letterSpacing literal merely repeats setPixelSize/setLetterSpacing. Test observable behavior instead."
+            law: 'Test Lint [no-tautological-config-echo]: Exact Font/Config Setter Echo',
+            desc: "Line " + (idx + 1) + ": Checking font.pixelSize() == 12 or letterSpacing() == 0.2 just repeats font.setPixelSize(12)."
+          });
+        }
+
+        // Test Lint 3: no-mocking-theater
+        if (checkMockTheater && (/(jest\.mock|vi\.fn|vi\.spyOn|toHaveBeenCalled)/.test(trimmed))) {
+          violations.push({
+            law: 'Test Lint [no-mocking-theater]: Mocking Theater Detected',
+            desc: "Line " + (idx + 1) + ": Spy/mock interaction assertion detected. Replace with stateful in-memory fake and verify observable state."
+          });
+        }
+
+        // Test Lint 4: no-vacuous-assertions
+        if (checkVacuous && (/(toBeDefined\(\)|!=\s*nullptr|assert\(true\))/.test(trimmed))) {
+          violations.push({
+            law: 'Test Lint [no-vacuous-assertions]: Vacuous Coverage-Padding Assertion',
+            desc: "Line " + (idx + 1) + ": Hollow non-null/defined check used to pad coverage without verifying concrete output state."
           });
         }
       });
@@ -1388,19 +1459,18 @@ void testThemeEngineStylesAndConfig() {
       }
     }
 
-    editor.value = SAMPLES.bad;
-    analyzeCode(SAMPLES.bad);
+    editor.value = SAMPLES.testSlop;
+    analyzeCode(SAMPLES.testSlop);
 
     editor.addEventListener('input', () => {
       analyzeCode(editor.value);
     });
 
-    if (toggleStyleGrep) {
-      toggleStyleGrep.addEventListener('change', () => analyzeCode(editor.value));
-    }
-    if (toggleConfigEcho) {
-      toggleConfigEcho.addEventListener('change', () => analyzeCode(editor.value));
-    }
+    [toggleStyleGrep, toggleConfigEcho, toggleMockTheater, toggleVacuous].forEach(toggle => {
+      if (toggle) {
+        toggle.addEventListener('change', () => analyzeCode(editor.value));
+      }
+    });
 
     document.getElementById('btn-load-bad').addEventListener('click', () => {
       editor.value = SAMPLES.bad;
