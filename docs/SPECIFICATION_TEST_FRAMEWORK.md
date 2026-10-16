@@ -40,6 +40,9 @@
    - 5.6 [Example 6: Partial Matching vs. Strict DTO Matching](#56-example-6-partial-matching-vs-strict-dto-matching)
 6. [Architectural Comparison: Jest/Vitest vs. `nitrous-spec`](#6-architectural-comparison-jestvitest-vs-nitrous-spec)
 7. [Integration with `nitrous` & Developer Workflows](#7-integration-with-nitrous--developer-workflows)
+8. [The Test Linter Catalog: Selectable Anti-Slop Violations (`nitrous test-lint`)](#8-the-test-linter-catalog-selectable-anti-slop-violations-nitrous-test-lint)
+   - 8.1 [`no-brittle-style-grep`: Static Stylesheet & Config Substring Grepping](#81-no-brittle-style-grep-static-stylesheet--config-substring-grepping)
+   - 8.2 [`no-tautological-config-echo`: Tautological Setter & Literal Echo Assertions](#82-no-tautological-config-echo-tautological-setter--literal-echo-assertions)
 
 ---
 
@@ -1251,3 +1254,44 @@ By adopting this specification:
 2. **You eliminate test maintenance debt**: Adding fields to database models never breaks existing behavioral tests.
 3. **You eliminate AI slop**: AI models generating code inside this framework cannot produce fake tests that pass while code fails.
 4. **You gain pristine visual diffs**: Every failure is a crystal-clear, colorized object difference.
+
+---
+
+## 8. The Test Linter Catalog: Selectable Anti-Slop Violations (`nitrous test-lint`)
+
+Beyond structural zero-mock governance, autonomous coding agents frequently inflate test counts with **Test-Padding Slop**: shallow assertions that verify static string literals or repeat configuration assignments verbatim without exercising runtime behavior.
+
+`nitrous test-lint` provides selectable AST & semantic test lint rules that developers can enable in `.nitrous/config.json` (or via the Cloud Governance Settings Dashboard) to automatically reject these anti-patterns.
+
+### 8.1 `no-brittle-style-grep`: Static Stylesheet & Config Substring Grepping
+
+* **The Anti-Pattern:** Asserting that a raw stylesheet, QSS, CSS, or template string contains hardcoded visual tokens (hex colors, border-radius pixels, rgba values):
+  ```cpp
+  // ❌ VIOLATION [no-brittle-style-grep] in test_theme_engine.h:
+  assert(qss.contains("border-radius: 15px"));
+  assert(qss.contains("border-radius: 13px"));
+  assert(qss.contains("#2d333b"));
+  assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+  assert(qss.contains("border-radius: 5px"));
+  ```
+* **Why It Must Be Dropped:** This is literally grepping a CSS file inside a unit test. It tests nothing about whether the UI engine (Qt, browser DOM, or layout engine) actually parsed the stylesheet or applied it to the widgets—while shattering tests the instant a visual token changes by 1px.
+* **The Nitrous Directive:** Reject substring assertions against raw style/presentation strings (`border-radius`, `#hex`, `rgba()`, `padding`, `margin`). Require behavioral state or computed property verification instead.
+
+### 8.2 `no-tautological-config-echo`: Tautological Setter & Literal Echo Assertions
+
+* **The Anti-Pattern:** Asserting that a getter or config property equals the exact literal that was just passed to its setter:
+  ```cpp
+  // ❌ VIOLATION [no-tautological-config-echo]:
+  font.setPixelSize(12);
+  assert(font.pixelSize() == 12);
+  assert(font.letterSpacing() == 0.2);
+  ```
+  ```typescript
+  // ❌ VIOLATION [no-tautological-config-echo]:
+  const config = new ThemeConfig({ pixelSize: 12, letterSpacing: 0.2 });
+  expect(config.pixelSize).toBe(12);
+  expect(config.letterSpacing).toBe(0.2);
+  ```
+* **Why It Must Be Dropped:** Checking that `font.pixelSize() == 12` immediately after `font.setPixelSize(12)` merely tests that the compiler's memory assignment or standard library setter works. It is a tautological echo of the implementation line with zero domain value.
+* **The Nitrous Directive:** Flag any assertion that directly echoes a literal assignment or trivial setter without an intervening domain computation, state transition, or boundary serialization.
+
