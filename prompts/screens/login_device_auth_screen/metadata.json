@@ -1,0 +1,9 @@
+{
+  "screen_id": "login_device_auth_screen",
+  "screen_title": "Sovereign Login & CLI Device Handshake Screen (nitrous login)",
+  "route": "/login/",
+  "target_output_path": "dist/login/index.html",
+  "domain": "https://nitrous.aramudan.dev/login/",
+  "plane_module": "Cloud Governance Backend & Configuration Gateway",
+  "status": "active_prototype"
+}

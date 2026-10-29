@@ -1,0 +1,9 @@
+{
+  "screen_id": "why_nitrous_screen",
+  "screen_title": "Why Nitrous? — The +49% AI Code Review Bottleneck, Anatomy of an AI Code Collapse & Anti-Captivity",
+  "route": "/why-nitrous/",
+  "target_output_path": "dist/why-nitrous/index.html",
+  "domain": "https://nitrous.aramudan.dev/why-nitrous/",
+  "plane_module": "Sovereign Web Console & Navigation Suite",
+  "status": "active_prototype"
+}

@@ -1,0 +1,74 @@
+screen_schema:
+  name: test_linter_article_screen
+  route: "/test-linter/"
+  target_file: "dist/test-linter/index.html"
+  theme: "Uber Black (#030303) + Crimson (#ef4444) + Amber (#f59e0b) + Cyan (#00f0ff)"
+
+article_header:
+  kicker: "TECHNICAL DEEP-DIVE • NITROUS TEST-LINT ENGINE"
+  title: "Grepping CSS in C++ and Echoing Setters: Why Your AI Agent's Unit Tests Are Worthless"
+  lede: >
+    When AI coding agents are forced by CI gates to write unit tests, they pad test suites with
+    brittle stylesheet string greps, tautological setter echoes, and hollow coverage checks—driving
+    the 2x surge in rejected Pull Requests documented in the 2026 Harvard/Jellyfish study. Here is
+    what `nitrous test-lint` drops and why.
+
+verbatim_violation_catalog:
+  - rule_id: "no-brittle-style-grep"
+    heading: "1. What We Should DROP: Brittle Style/Config String Assertions"
+    file_context: "In test_theme_engine.h, the spec proposed adding:"
+    code_specimen: |
+      assert(qss.contains("border-radius: 15px"));
+      assert(qss.contains("border-radius: 13px"));
+      assert(qss.contains("#2d333b"));
+      assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+      assert(qss.contains("border-radius: 5px"));
+    why_drop_this: >
+      This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether
+      Qt actually parsed the stylesheet or applied it to the widgets.
+    verbose_stdout_injection: |
+      [NITROUS TEST-LINT VIOLATION: no-brittle-style-grep]
+      Drop all qss.contains(...) CSS/QSS substring checks. Verify computed widget state or layout invariants instead.
+
+  - rule_id: "no-tautological-config-echo"
+    heading: "2. What We Should DROP: Exact Font Point/Pixel/Letter-Spacing Config Checks"
+    file_context: "Exact Font Point/Pixel/Letter-Spacing Config Checks (pixelSize() == 12, letterSpacing() == 0.2):"
+    code_specimen: |
+      font.setPixelSize(12);
+      font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
+      assert(font.pixelSize() == 12);
+      assert(font.letterSpacing() == 0.2);
+    why_drop_this: >
+      Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12).
+    verbose_stdout_injection: |
+      [NITROUS TEST-LINT VIOLATION: no-tautological-config-echo]
+      Drop getter assertions that immediately echo a literal setter assignment without an intervening domain computation.
+
+  - rule_id: "no-mocking-theater"
+    heading: "3. What We Should DROP: London-School Mocking Theater (`jest.mock` / `vi.fn`)"
+    code_specimen: |
+      const mockRepo = { findUser: vi.fn().mockResolvedValue({ id: 'u_1' }) };
+      expect(mockRepo.findUser).toHaveBeenCalledWith('u_1');
+    why_drop_this: >
+      Tests that only verify a fake was called with fake arguments provide zero safety while shattering
+      whenever internal helper methods are refactored.
+
+  - rule_id: "no-vacuous-assertions"
+    heading: "4. What We Should DROP: Vacuous Coverage-Padding Assertions"
+    code_specimen: |
+      expect(result).toBeDefined();
+      assert(widget != nullptr);
+    why_drop_this: >
+      AI agents write hollow non-null checks to game 100% line coverage gates (`c8` / `lcov`) without
+      asserting concrete output values.
+
+  - rule_id: "zinsser-test-prose"
+    heading: "5. What We Should DROP: Bureaucratic Test-Title Fillers"
+    code_specimen: |
+      // ❌ Banned:
+      it("should properly calculate user balance correctly when valid", ...);
+      // ✅ Enforced:
+      it("clamps negative overdraft balance to zero", ...);
+    why_drop_this: >
+      Enforces William Zinsser's On Writing Well doctrine: bans bureaucratic fillers (should, properly,
+      correctly, works as expected) and requires active present-tense verbs.

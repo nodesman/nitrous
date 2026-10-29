@@ -1,0 +1,222 @@
+# Page Builder & Architectural Prompt: Authenticated Governance Settings, Selectable Rule Matrix & Verbose Prompt-Context Editor (`governance_settings_screen`)
+
+<screen_data>
+# Screen Metadata (metadata.json)
+{
+  "screen_id": "governance_settings_screen",
+  "screen_title": "Authenticated Governance Settings, Selectable Rule Matrix & Verbose Prompt-Context Editor",
+  "route": "/settings/",
+  "target_output_path": "dist/settings/index.html",
+  "domain": "https://nitrous.aramudan.dev/settings/",
+  "plane_module": "Cloud Governance Backend & Configuration Gateway",
+  "status": "active_prototype"
+}
+
+# Structured Screen Data (screen_data.yaml) - governance_settings_screen
+screen_schema:
+  name: governance_settings_screen
+  route: "/settings/"
+  target_file: "dist/settings/index.html"
+  theme: "Uber Black (#030303) + Obsidian Panels (#0a0a0a) + Cyan (#00f0ff) + Crimson (#ef4444) + Emerald (#10b981)"
+
+top_governance_bar:
+  authenticated_identity: "Staff Architect (raj@acme-corp.dev)"
+  tamper_lock_badge: "🔒 AGENT TAMPER-LOCK: ACTIVE (CLI tokens cannot disable active rules)"
+  repository_selector:
+    options:
+      - id: "qt-desktop-client"
+        label: "acme-corp / qt-desktop-client (C++17 / Qt 6)"
+      - id: "checkout-api-ts"
+        label: "acme-corp / checkout-api-ts (TypeScript / Node)"
+      - id: "org-wide-ruleset"
+        label: "🏢 All 48 Repositories (GitHub Enterprise Org-Wide Ruleset)"
+  stack_presets:
+    - id: "preset-cpp-qt"
+      label: "C++ / Qt Desktop Profile"
+      description: "Enables no-brittle-style-grep (qss.contains) & no-tautological-config-echo (pixelSize == 12)"
+    - id: "preset-ts-backend"
+      label: "TypeScript / Node Backend"
+      description: "Enables no-mocking-theater (bans vi.fn/jest.mock) & Strict Value Objects"
+    - id: "preset-gradual-ratchet"
+      label: "Brownfield Gradual Ratchet"
+      description: "Enforces blocking errors strictly on modified lines in git diff"
+    - id: "preset-strict-all"
+      label: "Maximum Strict (All 9 Laws + 5 Test Lints)"
+  publish_action:
+    id: "btn-publish-lock-rules"
+    label: "Publish & Lock Config to Edge (v4.2)"
+
+main_split_workspace:
+  left_panel_rule_matrix:
+    width: "60%"
+    sections:
+      - section_id: "test-linter-rules"
+        title: "Module A: Test Linter Engine (`nitrous test-lint`) — Selectable Anti-Slop Violations"
+        modes: ["BLOCKING", "RATCHET", "OFF"]
+        rules:
+          - id: "no-brittle-style-grep"
+            default_mode: "BLOCKING"
+            name: "1. Drop Brittle Style/Config String Assertions (`test_theme_engine.h`)"
+            specimen: |
+              assert(qss.contains("border-radius: 15px"));
+              assert(qss.contains("border-radius: 13px"));
+              assert(qss.contains("#2d333b"));
+              assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+              assert(qss.contains("border-radius: 5px"));
+            rationale: "Literally grepping a CSS file inside a C++ unit test. Tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets."
+          - id: "no-tautological-config-echo"
+            default_mode: "BLOCKING"
+            name: "2. Drop Exact Font Point/Pixel/Letter-Spacing Config Checks"
+            specimen: |
+              font.setPixelSize(12);
+              font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
+              assert(font.pixelSize() == 12);
+              assert(font.letterSpacing() == 0.2);
+            rationale: "Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12)."
+          - id: "no-mocking-theater"
+            default_mode: "BLOCKING"
+            name: "3. Drop London-School Mocking Theater (`jest.mock` / `vi.fn`)"
+            rationale: "Bans spy call-count checks (`toHaveBeenCalledWith`); requires stateful in-memory fakes and observable state diffs."
+          - id: "no-vacuous-assertions"
+            default_mode: "BLOCKING"
+            name: "4. Drop Vacuous Coverage-Padding Assertions (`toBeDefined` / `!= nullptr`)"
+            rationale: "Blocks AI agents from gaming 100% coverage gates with hollow non-null checks."
+          - id: "zinsser-test-prose"
+            default_mode: "RATCHET"
+            name: "5. Enforce William Zinsser Active-Verb Test Prose"
+            rationale: "Bans bureaucratic fillers (`should`, `properly`, `correctly`, `works as expected`); requires active verbs (`compiles`, `clamps`, `neutralizes`)."
+
+      - section_id: "calisthenics-laws"
+        title: "Module B: Production AST Governor (`nitrous audit`) — The 9 Laws of Object Calisthenics"
+        rules:
+          - id: "law-01-max-indent"
+            name: "Law 01: Max Indentation Depth per Method"
+            threshold_input: 1
+            unit: "level"
+            default_mode: "BLOCKING"
+          - id: "law-02-no-else"
+            name: "Law 02: Zero `else` Keywords (Guard Clauses / Polymorphism Only)"
+            default_mode: "BLOCKING"
+          - id: "law-03-wrap-primitives"
+            name: "Law 03: Wrap All Primitives & Strings in Value Objects"
+            default_mode: "BLOCKING"
+          - id: "law-04-first-class-collections"
+            name: "Law 04: First-Class Collections Only"
+            default_mode: "BLOCKING"
+          - id: "law-05-one-dot-per-line"
+            name: "Law 05: One Dot Per Line (Law of Demeter)"
+            threshold_input: 1
+            unit: "dot"
+            default_mode: "RATCHET"
+          - id: "law-06-no-abbreviations"
+            name: "Law 06: Zero Identifier Abbreviations"
+            allowlist_input: "id, db, ui, qss, dto, url"
+            default_mode: "RATCHET"
+          - id: "law-07-small-entities"
+            name: "Law 07: Keep All Entities Small"
+            max_function_lines: 15
+            max_file_lines: 200
+            default_mode: "BLOCKING"
+          - id: "law-08-max-instance-vars"
+            name: "Law 08: Max Instance Variables per Class"
+            threshold_input: 2
+            unit: "fields"
+            default_mode: "BLOCKING"
+          - id: "law-09-tell-dont-ask"
+            name: "Law 09: No Getters or Setters (Tell, Don't Ask)"
+            default_mode: "BLOCKING"
+
+      - section_id: "github-enterprise-hooks"
+        title: "Module C: GitHub Enterprise & CI/CD Enforcement Hooks"
+        toggles:
+          - id: "ghe-org-ruleset"
+            label: "Enforce via GitHub Enterprise Organization-Wide Required Workflow"
+            checked: true
+          - id: "ghe-check-run-context"
+            label: "Inject Verbose Steering Output into GitHub Check Run Summary (for Cloud Coding Agents)"
+            checked: true
+          - id: "ghe-pre-receive-hook"
+            label: "Reject `git push` via Pre-Receive Hook if Violation Count Increases"
+            checked: true
+
+  right_panel_verbose_context_editor:
+    width: "40%"
+    sticky: true
+    title: "🧠 Verbose Prompt-Context Injection Editor (`stdout` -> Agent Context Window)"
+    explanation: >
+      Nitrous creates value by dumping a verbose, repo-specific architectural refactoring blueprint
+      into `stdout` when a rule fails. Click any rule on the left to inspect and customize the exact
+      prompt payload injected into your coding agent's context window:
+    default_selected_rule: "no-brittle-style-grep"
+    editable_templates_by_rule:
+      no-brittle-style-grep: |
+        [NITROUS TEST-LINT FAILURE — RULE: no-brittle-style-grep]
+        WHY THIS WAS REJECTED:
+        In test_theme_engine.h, you wrote substring assertions against raw stylesheet text:
+          assert(qss.contains("border-radius: 15px"));
+          assert(qss.contains("border-radius: 13px"));
+          assert(qss.contains("#2d333b"));
+          assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+          assert(qss.contains("border-radius: 5px"));
+        This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets.
+
+        MANDATORY REFACTORING ACTION FOR THIS REPO:
+        1. DELETE all qss.contains(...) CSS/QSS string assertions immediately.
+        2. Instantiate the target widget and verify computed behavioral state or widget layout geometry.
+        3. Re-run `nitrous test-lint` until exit code == 0.
+      no-tautological-config-echo: |
+        [NITROUS TEST-LINT FAILURE — RULE: no-tautological-config-echo]
+        WHY THIS WAS REJECTED:
+        You asserted exact font/config getter literals immediately after calling their setters:
+          font.setPixelSize(12);
+          assert(font.pixelSize() == 12);
+          assert(font.letterSpacing() == 0.2);
+        Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12). It tests compiler memory assignment rather than observable domain behavior.
+
+        MANDATORY REFACTORING ACTION FOR THIS REPO:
+        1. DELETE tautological setter/getter echo checks.
+        2. Test a real domain transformation, serialization boundary, or layout calculation instead.
+</screen_data>
+
+---
+
+## 1. Role & Goal Definitions
+You are the **Principal Systems Architect & Lead Frontend Interface Engineer** for **Nitrous (`nitrous.aramudan.dev`)** — the autonomous CLI architectural governor, test-lint anti-slop engine, and verification cage built by **NotionWorks**.
+
+Your goal is to generate or update the standalone web page / interactive prototype screen defined in `<screen_data>` above, strictly preserving every empirical statistic, code specimen, interactive state, and architectural thesis in `<screen_data>`.
+
+---
+
+## 2. Core Product Positioning & Strategic Mandates (Non-Negotiable)
+1. **Pure CLI & Terminal Harness Positioning:**
+   - Nitrous is **strictly a command-line tool (`nitrous login`, `nitrous init`, `nitrous audit`, `nitrous test-lint`, `nitrous steer`)** that autonomous coding agents (Claude Code, Cursor, Windsurf, Codex) execute directly in the terminal via `CLAUDE.md` / `AGENTS.md`—or via GitHub Enterprise Org-Wide Rulesets and Pre-Receive Hooks.
+   - Never position Nitrous as a VS Code / Cursor GUI extension or a passive post-PR chat bot.
+2. **Core Value Add — Verbose Prompt-Context Injection (`stdout` $\to$ Agent Context Window):**
+   - Traditional linters fail with AI agents because terse 1-line errors (`error: max-depth exceeded`) cause agents to write lazy local hacks.
+   - Nitrous adds value by dumping a **verbose, high-context architectural refactoring blueprint** directly into `stdout` when a rule fails. Because `stdout` is automatically fed into the coding agent's active prompt context window, the agent immediately understands *why* the code or test was rejected and *how* to refactor it on the very next turn—before a Pull Request is ever opened.
+3. **Server-Locked Configuration (Agent Tamper-Lock):**
+   - Human Reviewing Authorities log into the Nitrous Web Console to select active rules, adjust thresholds, and customize the verbose `stdout` steering prompts for their repositories.
+   - CLI agents authenticate via `nitrous login` and receive a **Read-Only Enforcement Token**—they can run `nitrous audit` and read the verbose steering output, but they **cannot disable, weaken, or edit the rules**.
+4. **Empirical Anchor — The October 2026 Harvard / Jellyfish Study:**
+   - Cite Fiona Chen & James Stratton (Harvard University, Oct 2026, analyzing **300M work events across 700,000+ employees at 700+ firms**, reported in *Ars Technica*):
+     - AI coding agents increased lines of code by **+30%**, commits by **+20%**, and PRs by **+23%**, yet produced **0% statistically significant increase in shipped Jira Issues or Epics**.
+     - Why? Because human PR review time **ballooned by +49%**, PRs requiring changes **nearly doubled (~2x)**, review comments rose **+35%**, and **+14%** more engineers were pulled into reviewing slop.
+     - Quote practitioner `metavirus`: *"Soooooo much slop code goes into the basin, which dozens of people need to sift through, strain out the dreck, then eventually close their eyes and release into the wild..."*
+5. **Verbatim Test-Lint Specimens (`nitrous test-lint`):**
+   - Always preserve the exact `test_theme_engine.h` C++/Qt stylesheet grep specimen (`assert(qss.contains("border-radius: 15px"))`, `13px`, `#2d333b`, `rgba(255, 255, 255, 0.10)`, `5px`) and the exact `font.pixelSize() == 12` / `font.letterSpacing() == 0.2` tautological config echo specimen verbatim.
+
+---
+
+## 3. Execution Constraints & Visual Aesthetic
+- **Tech Stack:** Pure standalone HTML5, CSS3, and vanilla JavaScript. Zero React/Next.js/Vite build step required.
+- **JavaScript Style:** Never use nested backticked template literals in JS (use array `.join('\n')` or string concatenation instead).
+- **Uber Black Aesthetic & Typography:**
+  - Deep obsidian canvas (`#030303`), elevated surface cards (`#080808` / `#0d0d0d`), `1px solid #1a1a1a` hairline borders.
+  - Accent palette: Electric Cyan (`#00f0ff`), Alum Blue (`#3b82f6`), Phosphor Emerald (`#10b981`), Warning Amber (`#f59e0b`), Crimson (`#ef4444`).
+  - Google Fonts: `Inter` (300–800) for crisp editorial headings/prose, and `JetBrains Mono` (400–700) for AST rules, CLI snippets, telemetry badges, and `stdout` prompt payloads.
+
+---
+
+## 4. Required Output Format
+- Output the complete, self-contained HTML file at the `target_output_path` specified in `<screen_data>`, with all CSS and interactive vanilla JS embedded cleanly.
+- Verify that every component, interactive toggle, preset button, and state transition specified in `<screen_data>` functions with zero console errors.

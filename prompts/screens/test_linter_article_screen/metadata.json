@@ -1,0 +1,9 @@
+{
+  "screen_id": "test_linter_article_screen",
+  "screen_title": "Grepping CSS in C++ & Echoing Setters: How AI Agents Fake Unit Tests (nitrous test-lint)",
+  "route": "/test-linter/",
+  "target_output_path": "dist/test-linter/index.html",
+  "domain": "https://nitrous.aramudan.dev/test-linter/",
+  "plane_module": "Test Linter & Anti-Slop Verification Engine (nitrous test-lint)",
+  "status": "active_prototype"
+}

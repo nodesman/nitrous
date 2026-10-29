@@ -1,0 +1,61 @@
+screen_schema:
+  name: why_nitrous_screen
+  route: "/why-nitrous/"
+  target_file: "dist/why-nitrous/index.html"
+  theme: "Uber Black (#030303) + Electric Cyan (#00f0ff) + Crimson (#ef4444) + Emerald (#10b981)"
+
+hero_essay_header:
+  kicker: "ARCHITECTURAL DOCTRINE & EMPIRICAL STUDY • ESSAY"
+  title: "Why Nitrous? More Code, Zero Software, and the +49% Review Bottleneck."
+  lede: >
+    In October 2026, Harvard University researchers Fiona Chen and James Stratton analyzed 300 million
+    commits and pull requests across 700,000+ engineers at 700+ software firms. Their finding was stark:
+    AI coding agents generate +30% more lines of code, but 0% more shipped software—because every efficiency
+    gain is swallowed by a +49% human code review bottleneck.
+
+harvard_jellyfish_telemetry_section:
+  source_url: "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/"
+  dataset_scale: "300M work events across 700,000+ employees at 700+ firms (Jellyfish telemetry, 2021–March 2026)"
+  generation_metrics:
+    loc_increase: "+30%"
+    commits_increase: "+20%"
+    pull_requests_increase: "+23%"
+  downstream_bottleneck_metrics:
+    pr_review_time_surge: "+49% longer from submission to merge"
+    prs_requiring_changes: "~2.0x (nearly doubled)"
+    comments_per_pr: "+35% increase"
+    workers_pulled_into_review: "+14% increase"
+    net_jira_epics_resolved: "0.0% statistically significant change"
+  why_ai_review_bots_failed: >
+    80% of studied firms deployed AI code review tools by March 2026, yet AI accounted for only 23.3%
+    of review comments and 10.8% of pull requests. Reviewing an 800-line nested spaghetti PR after it
+    is opened is already too late.
+  practitioner_quote:
+    author: "metavirus (Ars Technica Staff Pick, 9 Oct 2026)"
+    text: "I’m forced to use AI at work and this is absolutely 10000% true. Soooooo much slop code goes into the basin, which dozens of people need to sift through, strain out the dreck, then eventually close their eyes and release into the wild because now we have new SLAs so we’re not seen as a bottleneck to progress."
+
+four_stages_of_ai_code_collapse:
+  - stage: "01"
+    badge: "STAGE 01 • 100% EUPHORIA"
+    title: "The Vibe-Coding High (+30% Raw Code)"
+    body: "You prompt Claude Code, Cursor, or Windsurf. Code materializes at 200 mph. Commits jump +20% and PRs jump +23%."
+  - stage: "02"
+    badge: "STAGE 02 • INVISIBLE ROT"
+    title: "The Basin of Dreck"
+    body: "Files swell past 800 lines, conditionals nest 5 levels deep, and agents pad PRs with brittle CSS string greps and setter echoes."
+  - stage: "03"
+    badge: "STAGE 03 • THE +49% BOTTLENECK"
+    title: "The Human Review Gridlock"
+    body: "PR review time balloons +49% and rejections double. Senior engineers spend days straining out AI slop, yielding 0% net increase in shipped Jira Epics."
+  - stage: "04"
+    badge: "STAGE 04 • UPSTREAM CURE"
+    title: "The Nitrous Verbose Context Cage"
+    body: "Nitrous runs upstream in the agent's terminal loop (`nitrous audit` & `nitrous test-lint`), dumping verbose refactoring instructions into stdout until code is decomposed into <=15-line Calisthenic modules that a human can sign off on in 30 seconds."
+
+anti_captivity_mandate:
+  headline: "The Anti-Captivity Mandate: Stop Renting Your Architecture"
+  thesis: >
+    When your codebase consists of 1,500-line God objects, you become permanently captive to $20/M-token
+    closed frontier models just to make a routine bug fix. By enforcing micro-functions (<=15 lines) and
+    micro-files (<=200 lines), Nitrous guarantees every module fits into small, fast commodity models
+    like Gemini 3.5 Flash or local open-weights LLMs for pennies.

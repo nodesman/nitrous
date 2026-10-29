@@ -1,0 +1,9 @@
+{
+  "screen_id": "governance_settings_screen",
+  "screen_title": "Authenticated Governance Settings, Selectable Rule Matrix & Verbose Prompt-Context Editor",
+  "route": "/settings/",
+  "target_output_path": "dist/settings/index.html",
+  "domain": "https://nitrous.aramudan.dev/settings/",
+  "plane_module": "Cloud Governance Backend & Configuration Gateway",
+  "status": "active_prototype"
+}

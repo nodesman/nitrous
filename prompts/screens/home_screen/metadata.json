@@ -1,0 +1,9 @@
+{
+  "screen_id": "home_screen",
+  "screen_title": "Nitrous Main Console, Telemetry Hero & Interactive AST/Test-Lint Playground",
+  "route": "/",
+  "target_output_path": "dist/index.html",
+  "domain": "https://nitrous.aramudan.dev/",
+  "plane_module": "Sovereign Web Console & Navigation Suite",
+  "status": "active_prototype"
+}

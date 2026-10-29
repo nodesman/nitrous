@@ -1,0 +1,62 @@
+screen_schema:
+  name: login_device_auth_screen
+  route: "/login/"
+  target_file: "dist/login/index.html"
+  theme: "Uber Black (#030303) + Electric Cyan (#00f0ff) + Emerald (#10b981) + Amber/Crimson Security Locks"
+
+strategic_rationale:
+  why_login_exists: >
+    When rules live in a local config file (.eslintrc / tsconfig.json), autonomous coding agents
+    routinely cheat by editing the file or adding ignore comments. Nitrous locks rule configuration
+    behind an authenticated Human Reviewing Authority account in the Cloud, while issuing read-only
+    enforcement tokens to the CLI via `nitrous login`.
+
+layout_architecture:
+  type: "Centered Two-Column Split Stage (max-width: 1020px)"
+  left_column:
+    id: "human-authority-login"
+    kicker: "🔒 HUMAN REVIEWING AUTHORITY ONLY"
+    headline: "Sign in to Nitrous Governance Console"
+    description: >
+      Configure tamper-locked AST invariants, select Test-Lint violations, and customize the
+      verbose steering prompts injected into your coding agents' stdout context.
+    auth_providers:
+      - id: "github-enterprise-sso"
+        label: "Continue with GitHub Enterprise / GitHub SSO"
+        style: "primary_white"
+        note: "Syncs Org-Wide Rulesets, Required Workflows & Pre-Receive Hooks"
+      - id: "proid-sso"
+        label: "Continue with ProID.id"
+        style: "cyan_outline"
+      - id: "work-email-magic-link"
+        input_placeholder: "architect@company.com"
+        button_label: "Send One-Time Passcode →"
+    prototype_instant_demo_button:
+      id: "btn-instant-demo-login"
+      label: "⚡ Instant Prototype Login: Enter as Staff Architect (acme-corp)"
+      target_redirect: "/settings/"
+      description: "Simulates authenticated session and opens the full Rule & Verbose Prompt Configuration Console."
+
+  right_column:
+    id: "cli-device-handshake"
+    kicker: "⚡ TERMINAL DEVICE AUTHORIZATION (RFC 8628)"
+    headline: "Authorize `nitrous login` CLI Session"
+    terminal_preview: |
+      $ nitrous login
+      ⚡ Requesting device handshake from nitrous.aramudan.dev...
+      ▸ Verification Code: NTRX - 8492
+      ▸ Waiting for Human Reviewing Authority approval...
+    device_code_input:
+      default_value: "NTRX-8492"
+      segments: ["N", "T", "R", "X", "-", "8", "4", "9", "2"]
+    agent_tamper_lock_scopes:
+      allowed:
+        - "Execute `nitrous audit`, `nitrous test-lint`, and `nitrous steer` in terminal"
+        - "Fetch active repository rules & receive verbose stdout refactoring prompts"
+      forbidden:
+        - "LOCKED: Cannot disable, weaken, or modify any active rule from the CLI"
+        - "LOCKED: Cannot alter threshold limits or bypass GitHub Enterprise gates"
+    authorize_button:
+      id: "btn-authorize-device"
+      label: "Authorize CLI Device & Issue Read-Only Enforcement Token"
+      success_state_message: "✓ DEVICE NTRX-8492 AUTHORIZED — Read-Only Enforcement Token dispatched to terminal."
