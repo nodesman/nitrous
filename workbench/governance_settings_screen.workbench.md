@@ -19,6 +19,10 @@ screen_schema:
   target_file: "dist/settings/index.html"
   theme: "Uber Black (#030303) + Obsidian Panels (#0a0a0a) + Cyan (#00f0ff) + Crimson (#ef4444) + Emerald (#10b981)"
 
+workflow_architecture:
+  creation_mode: "Defined via Natural-Language Agent Prompt (User describes anti-pattern or pastes bad diff -> Agent synthesizes AST rule/trigger + verbose stdout prompt)"
+  management_mode: "Managed via 3-Area CRUD Interface (Create, Read, Update, Delete/Toggle across Stylistic Issues, Architectural Triggers, and Test Lints)"
+
 top_governance_bar:
   authenticated_identity: "Staff Architect (raj@acme-corp.dev)"
   tamper_lock_badge: "🔒 AGENT TAMPER-LOCK: ACTIVE (CLI tokens cannot disable active rules)"
@@ -30,152 +34,99 @@ top_governance_bar:
         label: "acme-corp / checkout-api-ts (TypeScript / Node)"
       - id: "org-wide-ruleset"
         label: "🏢 All 48 Repositories (GitHub Enterprise Org-Wide Ruleset)"
-  stack_presets:
-    - id: "preset-cpp-qt"
-      label: "C++ / Qt Desktop Profile"
-      description: "Enables no-brittle-style-grep (qss.contains) & no-tautological-config-echo (pixelSize == 12)"
-    - id: "preset-ts-backend"
-      label: "TypeScript / Node Backend"
-      description: "Enables no-mocking-theater (bans vi.fn/jest.mock) & Strict Value Objects"
-    - id: "preset-gradual-ratchet"
-      label: "Brownfield Gradual Ratchet"
-      description: "Enforces blocking errors strictly on modified lines in git diff"
-    - id: "preset-strict-all"
-      label: "Maximum Strict (All 9 Laws + 5 Test Lints)"
-  publish_action:
-    id: "btn-publish-lock-rules"
-    label: "Publish & Lock Config to Edge (v4.2)"
 
-main_split_workspace:
-  left_panel_rule_matrix:
-    width: "60%"
-    sections:
-      - section_id: "test-linter-rules"
-        title: "Module A: Test Linter Engine (`nitrous test-lint`) — Selectable Anti-Slop Violations"
-        modes: ["BLOCKING", "RATCHET", "OFF"]
-        rules:
-          - id: "no-brittle-style-grep"
-            default_mode: "BLOCKING"
-            name: "1. Drop Brittle Style/Config String Assertions (`test_theme_engine.h`)"
-            specimen: |
-              assert(qss.contains("border-radius: 15px"));
-              assert(qss.contains("border-radius: 13px"));
-              assert(qss.contains("#2d333b"));
-              assert(qss.contains("rgba(255, 255, 255, 0.10)"));
-              assert(qss.contains("border-radius: 5px"));
-            rationale: "Literally grepping a CSS file inside a C++ unit test. Tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets."
-          - id: "no-tautological-config-echo"
-            default_mode: "BLOCKING"
-            name: "2. Drop Exact Font Point/Pixel/Letter-Spacing Config Checks"
-            specimen: |
-              font.setPixelSize(12);
-              font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
-              assert(font.pixelSize() == 12);
-              assert(font.letterSpacing() == 0.2);
-            rationale: "Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12)."
-          - id: "no-mocking-theater"
-            default_mode: "BLOCKING"
-            name: "3. Drop London-School Mocking Theater (`jest.mock` / `vi.fn`)"
-            rationale: "Bans spy call-count checks (`toHaveBeenCalledWith`); requires stateful in-memory fakes and observable state diffs."
-          - id: "no-vacuous-assertions"
-            default_mode: "BLOCKING"
-            name: "4. Drop Vacuous Coverage-Padding Assertions (`toBeDefined` / `!= nullptr`)"
-            rationale: "Blocks AI agents from gaming 100% coverage gates with hollow non-null checks."
-          - id: "zinsser-test-prose"
-            default_mode: "RATCHET"
-            name: "5. Enforce William Zinsser Active-Verb Test Prose"
-            rationale: "Bans bureaucratic fillers (`should`, `properly`, `correctly`, `works as expected`); requires active verbs (`compiles`, `clamps`, `neutralizes`)."
+agent_assisted_crud_creator_bar:
+  title: "✨ Define New Rule, Trigger, or Test-Lint with Agent"
+  input_placeholder: "Describe what should or shouldn't happen (e.g. 'If a domain class imports axios or fetch, block it and tell the agent to use HttpGatewayAdapter')..."
+  target_area_selector:
+    - "1. Stylistic & Code Calisthenics"
+    - "2. Architectural Triggers (IF Event -> THEN Action)"
+    - "3. Test Lints (nitrous test-lint)"
+  create_button_label: "+ Synthesize & Add to CRUD Table"
 
-      - section_id: "calisthenics-laws"
-        title: "Module B: Production AST Governor (`nitrous audit`) — The 9 Laws of Object Calisthenics"
-        rules:
-          - id: "law-01-max-indent"
-            name: "Law 01: Max Indentation Depth per Method"
-            threshold_input: 1
-            unit: "level"
-            default_mode: "BLOCKING"
-          - id: "law-02-no-else"
-            name: "Law 02: Zero `else` Keywords (Guard Clauses / Polymorphism Only)"
-            default_mode: "BLOCKING"
-          - id: "law-03-wrap-primitives"
-            name: "Law 03: Wrap All Primitives & Strings in Value Objects"
-            default_mode: "BLOCKING"
-          - id: "law-04-first-class-collections"
-            name: "Law 04: First-Class Collections Only"
-            default_mode: "BLOCKING"
-          - id: "law-05-one-dot-per-line"
-            name: "Law 05: One Dot Per Line (Law of Demeter)"
-            threshold_input: 1
-            unit: "dot"
-            default_mode: "RATCHET"
-          - id: "law-06-no-abbreviations"
-            name: "Law 06: Zero Identifier Abbreviations"
-            allowlist_input: "id, db, ui, qss, dto, url"
-            default_mode: "RATCHET"
-          - id: "law-07-small-entities"
-            name: "Law 07: Keep All Entities Small"
-            max_function_lines: 15
-            max_file_lines: 200
-            default_mode: "BLOCKING"
-          - id: "law-08-max-instance-vars"
-            name: "Law 08: Max Instance Variables per Class"
-            threshold_input: 2
-            unit: "fields"
-            default_mode: "BLOCKING"
-          - id: "law-09-tell-dont-ask"
-            name: "Law 09: No Getters or Setters (Tell, Don't Ask)"
-            default_mode: "BLOCKING"
+three_crud_governance_areas:
+  - area_id: "area-1-stylistic-calisthenics"
+    title: "Area 1: Stylistic & Code Calisthenics Issues (Production Syntax Hygiene)"
+    crud_columns: ["Rule ID", "Stylistic Invariant", "Threshold / Pattern", "Severity (BLOCKING / RATCHET / OFF)", "Actions (Edit Prompt / Delete)"]
+    records:
+      - id: "law-01-max-indent"
+        name: "Max 1 Level of Indentation per Method"
+        threshold: "Max depth <= 1"
+        severity: "BLOCKING"
+      - id: "law-02-no-else"
+        name: "Zero `else` Keywords (Guard Clauses / Polymorphism)"
+        threshold: "0 occurrences"
+        severity: "BLOCKING"
+      - id: "law-05-one-dot-per-line"
+        name: "One Dot Per Line (Law of Demeter)"
+        threshold: "Max 1 dot per statement"
+        severity: "RATCHET"
+      - id: "law-06-no-abbreviations"
+        name: "Zero Identifier Abbreviations"
+        threshold: "Allowlist: id, db, ui, qss, dto, url"
+        severity: "RATCHET"
+      - id: "law-09-tell-dont-ask"
+        name: "No Getters or Setters (Tell, Don't Ask)"
+        threshold: "0 public get/set accessors"
+        severity: "BLOCKING"
 
-      - section_id: "github-enterprise-hooks"
-        title: "Module C: GitHub Enterprise & CI/CD Enforcement Hooks"
-        toggles:
-          - id: "ghe-org-ruleset"
-            label: "Enforce via GitHub Enterprise Organization-Wide Required Workflow"
-            checked: true
-          - id: "ghe-check-run-context"
-            label: "Inject Verbose Steering Output into GitHub Check Run Summary (for Cloud Coding Agents)"
-            checked: true
-          - id: "ghe-pre-receive-hook"
-            label: "Reject `git push` via Pre-Receive Hook if Violation Count Increases"
-            checked: true
+  - area_id: "area-2-architectural-triggers"
+    title: "Area 2: Architectural Triggers (IF Structural Event -> THEN Verbose Action)"
+    crud_columns: ["Trigger ID", "IF Condition (Structural Event)", "THEN Action (Injected into Agent stdout)", "Severity", "Actions (Edit / Delete)"]
+    records:
+      - id: "trigger-god-file-split"
+        if_condition: "File exceeds 200 lines OR Function exceeds 15 lines OR Class has > 2 instance variables"
+        then_action: "Halt feature additions; dump Submodule & Class Decomposition Blueprint into agent stdout"
+        severity: "BLOCKING"
+      - id: "trigger-layer-breach"
+        if_condition: "Code inside `src/domain/**` imports DB driver (`sql`, `prisma`), network (`fetch`), or UI toolkit"
+        then_action: "Block import; dump Repository Interface & Hexagonal Adapter stencil into agent stdout"
+        severity: "BLOCKING"
+      - id: "trigger-primitive-obsession"
+        if_condition: "Raw primitive parameter (`email: string`, `amount: number`) repeats across >= 3 method signatures"
+        then_action: "Trigger Value Object extraction directive (`EmailAddress`, `Money`) in agent stdout"
+        severity: "BLOCKING"
+      - id: "trigger-dto-strict-boundary"
+        if_condition: "Public API route, webhook, or DTO serializer is created or modified"
+        then_action: "Require `expectStrict()` DTO security test proving `passwordHash` / internal fields cannot leak"
+        severity: "BLOCKING"
+      - id: "trigger-test-tampering-circuit-breaker"
+        if_condition: "Agent modifies/deletes an existing test assertion to make broken code pass OR fails audit 3x"
+        then_action: "Revert test edit; trigger Hard Circuit Breaker & Agentless Repair protocol in stdout"
+        severity: "BLOCKING"
 
-  right_panel_verbose_context_editor:
-    width: "40%"
-    sticky: true
-    title: "🧠 Verbose Prompt-Context Injection Editor (`stdout` -> Agent Context Window)"
-    explanation: >
-      Nitrous creates value by dumping a verbose, repo-specific architectural refactoring blueprint
-      into `stdout` when a rule fails. Click any rule on the left to inspect and customize the exact
-      prompt payload injected into your coding agent's context window:
-    default_selected_rule: "no-brittle-style-grep"
-    editable_templates_by_rule:
-      no-brittle-style-grep: |
-        [NITROUS TEST-LINT FAILURE — RULE: no-brittle-style-grep]
-        WHY THIS WAS REJECTED:
-        In test_theme_engine.h, you wrote substring assertions against raw stylesheet text:
-          assert(qss.contains("border-radius: 15px"));
-          assert(qss.contains("border-radius: 13px"));
-          assert(qss.contains("#2d333b"));
-          assert(qss.contains("rgba(255, 255, 255, 0.10)"));
-          assert(qss.contains("border-radius: 5px"));
-        This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets.
+  - area_id: "area-3-test-lints"
+    title: "Area 3: Dedicated Test Lints Area (`nitrous test-lint` Anti-Slop Suite)"
+    crud_columns: ["Test-Lint ID", "What We Drop (Anti-Slop Pattern)", "Why We Drop It (Injected Rationale)", "Severity", "Actions (Edit / Delete)"]
+    records:
+      - id: "no-brittle-style-grep"
+        what_we_drop: "Brittle Style/Config String Assertions (`test_theme_engine.h`: `assert(qss.contains(\"border-radius: 15px\"))`, `13px`, `#2d333b`, `rgba(255, 255, 255, 0.10)`, `5px`)"
+        why_we_drop: "This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets."
+        severity: "BLOCKING"
+      - id: "no-tautological-config-echo"
+        what_we_drop: "Exact Font Point/Pixel/Letter-Spacing Config Checks (`pixelSize() == 12`, `letterSpacing() == 0.2`)"
+        why_we_drop: "Checking that `font.pixelSize() == 12` just repeats the line of code `font.setPixelSize(12)`."
+        severity: "BLOCKING"
+      - id: "no-mocking-theater"
+        what_we_drop: "London-School Mocking Theater (`jest.mock()`, `vi.fn()`, `toHaveBeenCalledWith()`)"
+        why_we_drop: "Tests that only check if a mock called another mock break on harmless refactors while passing when real state fails."
+        severity: "BLOCKING"
+      - id: "no-vacuous-assertions"
+        what_we_drop: "Vacuous Coverage-Padding Assertions (`expect(res).toBeDefined()`, `assert(ptr != nullptr)`)"
+        why_we_drop: "Stops AI agents from gaming 100% coverage gates with hollow non-null checks."
+        severity: "BLOCKING"
+      - id: "zinsser-test-prose"
+        what_we_drop: "Bureaucratic Test-Title Fillers (`should`, `properly`, `correctly`, `works as expected`)"
+        why_we_drop: "Enforces William Zinsser's active present-tense verb mandate (`compiles`, `clamps`, `neutralizes`)."
+        severity: "RATCHET"
 
-        MANDATORY REFACTORING ACTION FOR THIS REPO:
-        1. DELETE all qss.contains(...) CSS/QSS string assertions immediately.
-        2. Instantiate the target widget and verify computed behavioral state or widget layout geometry.
-        3. Re-run `nitrous test-lint` until exit code == 0.
-      no-tautological-config-echo: |
-        [NITROUS TEST-LINT FAILURE — RULE: no-tautological-config-echo]
-        WHY THIS WAS REJECTED:
-        You asserted exact font/config getter literals immediately after calling their setters:
-          font.setPixelSize(12);
-          assert(font.pixelSize() == 12);
-          assert(font.letterSpacing() == 0.2);
-        Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12). It tests compiler memory assignment rather than observable domain behavior.
-
-        MANDATORY REFACTORING ACTION FOR THIS REPO:
-        1. DELETE tautological setter/getter echo checks.
-        2. Test a real domain transformation, serialization boundary, or layout calculation instead.
+right_panel_verbose_context_editor:
+  sticky: true
+  title: "🧠 CRUD Detail & Verbose `stdout` Prompt Editor"
+  description: >
+    Selecting any row in Area 1 (Stylistic), Area 2 (Architectural Triggers), or Area 3 (Test Lints)
+    opens its CRUD editor here so the user can update the trigger condition or customize the exact
+    verbose refactoring text dumped into the AI agent's terminal context window.
 </screen_data>
 
 ---

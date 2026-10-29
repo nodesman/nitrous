@@ -17,7 +17,7 @@ screen_schema:
   name: home_screen
   route: "/"
   target_file: "dist/index.html"
-  theme: "Uber Black (#030303) + Electric Cyan (#00f0ff) + Crimson (#ef4444) + Emerald (#10b981)"
+  theme: "Uber Black (#030303) + Electric Cyan (#00f0ff) + Crimson (#ef4444) + Amber (#f59e0b) + Emerald (#10b981)"
 
 empirical_telemetry_banner:
   citation: "Fiona Chen & James Stratton (Harvard University, Oct 2026) — Jellyfish Telemetry Study across 300M work events, 700,000+ engineers, and 700+ software firms"
@@ -40,98 +40,117 @@ empirical_telemetry_banner:
     quote: "I’m forced to use AI at work and this is absolutely 10000% true. Soooooo much slop code goes into the basin, which dozens of people need to sift through, strain out the dreck, then eventually close their eyes and release into the wild because now we have new SLAs so we’re not seen as a bottleneck to progress."
 
 core_value_proposition:
-  headline: "Inject Nitrous Into Your AI Agent. Kill the +49% Review Bottleneck."
-  mechanism_name: "Verbose Prompt-Context Injection (stdout -> Agent Context Window)"
+  headline: "Define Rules with an Agent. Manage Them in a CRUD Dashboard. Inject Verbose Context into Every Run."
+  mechanism_name: "Agent-Defined Rules + CRUD Governance Console + Verbose stdout Context Injection"
   explanation: >
-    Traditional linters emit terse 1-line errors that cause AI coding agents to write lazy local hacks.
-    When an agent runs `nitrous audit` or `nitrous test-lint` in the terminal, Nitrous dumps a verbose,
-    repo-specific architectural refactoring blueprint directly into `stdout`—landing straight inside the
-    agent's active prompt context window so it self-corrects all 9 Object Calisthenics laws and Test-Lint
-    violations before a Pull Request is ever opened.
+    1. DEFINE WITH AN AGENT: Describe an anti-pattern or architectural boundary in plain English (or paste a bad PR diff),
+       and Nitrous generates the AST detector and the verbose refactoring prompt automatically.
+    2. MANAGE IN A 3-AREA CRUD INTERFACE: View, create, edit, toggle, or delete every rule across three dedicated areas:
+       (I) Stylistic & Calisthenic Issues, (II) Architectural Triggers, and (III) Test Lints (`nitrous test-lint`).
+    3. INJECT VERBOSE CONTEXT INTO STDOUT: When your coding agent violates any active rule in the terminal, Nitrous dumps
+       your exact verbose refactoring instructions directly into `stdout` (the agent's prompt context window) so the agent
+       fixes the problem before a Pull Request is ever opened.
 
-navigation_bar:
-  brand: "⚡ nitrous."
-  parent_badge: "NW | A NotionWorks Product"
-  edition_tabs:
-    - id: "vibe"
-      label: "⚡ Vibe Coder Edition"
-      badge: "Plainspoken"
-    - id: "developer"
-      label: "🛠️ Developer Edition"
-      badge: "AST Rigor"
-    - id: "treatise"
-      label: "📜 The Treatise"
-      badge: "Doctrine"
-  links:
-    - label: "Why Nitrous?"
-      href: "/why-nitrous/"
-    - label: "🔒 Sign In / Rule Settings"
-      href: "/login/"
-      style: "highlight_cyan"
-    - label: "🔔 Get Notified"
-      href: "#subscribe-section"
-    - label: "Playground"
-      href: "#playground-section"
-    - label: "GitHub"
-      href: "https://github.com/nodesman/nitrous"
+home_page_crud_dashboard_showcase:
+  title: "Interactive Account Rule & Trigger CRUD Dashboard (Prototype)"
+  subtitle: "Decide exactly what should and shouldn't happen in your repositories across 3 dedicated governance areas:"
+  agent_rule_creator_bar:
+    input_placeholder: "Describe a new rule or trigger in plain English (e.g. 'Never allow qss.contains CSS grepping in C++ unit tests')..."
+    button_label: "✨ Generate Rule via Agent & Add to CRUD Table"
+  three_governance_areas:
+    - area_id: "area-1-stylistic-calisthenics"
+      tab_label: "1. Stylistic & Code Calisthenics"
+      description: "Line and function-level hygiene rules ('What shouldn't happen in production syntax')."
+      crud_operations: ["Create via Agent", "Read/Inspect", "Update Threshold/Verbose Prompt", "Delete/Toggle"]
+      default_records:
+        - id: "style-no-else"
+          name: "Zero `else` Keywords"
+          condition: "Any `else` or `else if` branch in production methods"
+          action: "Block & inject Guard Clause / Polymorphism refactoring blueprint into stdout"
+          status: "BLOCKING"
+        - id: "style-max-indent"
+          name: "Max 1 Level of Indentation"
+          condition: "Nested control flow depth > 1 inside any function"
+          action: "Block & inject helper-extraction instructions into stdout"
+          status: "BLOCKING"
+        - id: "style-no-getters-setters"
+          name: "Tell, Don't Ask (No Getters/Setters)"
+          condition: "Public `getX()` / `setX()` accessors exposing raw internal state"
+          action: "Block & instruct agent to expose domain behavior commands instead"
+          status: "BLOCKING"
+        - id: "style-no-abbreviations"
+          name: "Muscular Unabbreviated Identifiers"
+          condition: "Single-letter or cryptic variable abbreviations (`mgr`, `val`, `tmp`)"
+          action: "Warn/Block & require full domain vocabulary"
+          status: "RATCHET"
 
-selectable_test_linter_module:
-  module_kicker: "DEDICATED MODULE • NITROUS TEST-LINT ENGINE"
-  title: "What We Drop: Selectable Test-Lint Violations (nitrous test-lint)"
-  rules:
-    - id: "no-brittle-style-grep"
-      title: "1. What We Drop: Brittle Style/Config String Assertions"
-      context: "In test_theme_engine.h, the spec proposed adding:"
-      code_specimen: |
-        assert(qss.contains("border-radius: 15px"));
-        assert(qss.contains("border-radius: 13px"));
-        assert(qss.contains("#2d333b"));
-        assert(qss.contains("rgba(255, 255, 255, 0.10)"));
-        assert(qss.contains("border-radius: 5px"));
-      why_drop_verbatim: "This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets."
-    - id: "no-tautological-config-echo"
-      title: "2. What We Drop: Exact Font Point/Pixel/Letter-Spacing Config Checks"
-      context: "Exact config checks (pixelSize() == 12, letterSpacing() == 0.2):"
-      code_specimen: |
-        font.setPixelSize(12);
-        font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
-        assert(font.pixelSize() == 12);
-        assert(font.letterSpacing() == 0.2);
-      why_drop_verbatim: "Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12)."
-    - id: "no-mocking-theater"
-      title: "3. What We Drop: Mocking Theater & Spy Call-Counts"
-      why_drop_verbatim: "Drops jest.mock(), vi.fn(), and toHaveBeenCalledWith(). Tests that only check if a mock called another mock break on harmless refactors while passing when real state fails."
-    - id: "no-vacuous-assertions"
-      title: "4. What We Drop: Vacuous Coverage-Padding Assertions"
-      why_drop_verbatim: "Drops expect(res).toBeDefined(), expect(true).toBe(true), and standalone assert(ptr != nullptr) used by AI agents to game 100% coverage gates."
-    - id: "zinsser-test-prose"
-      title: "5. What We Drop: Bureaucratic Test-Title Fillers"
-      why_drop_verbatim: "Enforces William Zinsser's active present-tense verb doctrine (compiles, clamps, neutralizes) and bans bureaucratic fillers (should, properly, correctly, works as expected)."
+    - area_id: "area-2-architectural-triggers"
+      tab_label: "2. Architectural Triggers (IF Event -> THEN Action)"
+      description: "Structural event triggers ('When threshold or boundary X is crossed -> Trigger architectural action Y')."
+      crud_operations: ["Create Trigger via Agent", "Read/Inspect", "Update IF/THEN & Verbose Prompt", "Delete/Toggle"]
+      default_records:
+        - id: "trigger-god-file-split"
+          name: "Entity Size & God-Class Decomposition Trigger"
+          when_trigger: "IF file length > 200 lines OR function length > 15 lines OR class instance vars > 2"
+          then_action: "Halt feature additions; inject step-by-step Submodule Decomposition Blueprint into agent stdout"
+          status: "BLOCKING"
+        - id: "trigger-layer-breach"
+          name: "Domain Layer Purity Trigger"
+          when_trigger: "IF any file under `src/domain/**` imports a DB driver (`sql`, `prisma`), HTTP client (`fetch`), or UI toolkit"
+          then_action: "Reject import; inject Repository Interface & Hexagonal Adapter stencil into agent stdout"
+          status: "BLOCKING"
+        - id: "trigger-primitive-obsession"
+          name: "Value Object Extraction Trigger"
+          when_trigger: "IF raw primitive parameters (`email: string`, `amount: number`) repeat across >= 3 method signatures"
+          then_action: "Trigger Value Object extraction prompt (`EmailAddress`, `Money`) in agent stdout"
+          status: "BLOCKING"
+        - id: "trigger-dto-strict-boundary"
+          name: "Public API / DTO Security Boundary Trigger"
+          when_trigger: "IF a public controller, REST route, or DTO serializer is modified"
+          then_action: "Require `expectStrict()` test verification proving `passwordHash` / internal fields cannot leak"
+          status: "BLOCKING"
+        - id: "trigger-test-tampering-circuit-breaker"
+          name: "Test-Tampering & Ping-Pong Circuit Breaker"
+          when_trigger: "IF agent deletes/weakens an existing assertion to make a failing run pass OR fails audit 3x consecutively"
+          then_action: "Revert test edit; inject Agentless Localization & Repair protocol into stdout"
+          status: "BLOCKING"
 
-interactive_playground:
-  presets:
-    - id: "btn-load-test-slop"
-      label: "🧪 Load Brittle Test-Lint Slop (test_theme_engine.h)"
-    - id: "btn-load-bad"
-      label: "❌ Load AI Vibe-Coded Spaghetti"
-    - id: "btn-load-good"
-      label: "✅ Load Clean Nitrous Code"
-  selectable_checkboxes:
-    - id: "toggle-style-grep"
-      rule: "no-brittle-style-grep"
-      default_checked: true
-    - id: "toggle-config-echo"
-      rule: "no-tautological-config-echo"
-      default_checked: true
-    - id: "toggle-mock-theater"
-      rule: "no-mocking-theater"
-      default_checked: true
-    - id: "toggle-vacuous"
-      rule: "no-vacuous-assertions"
-      default_checked: true
-  diagnostics_output_behavior: >
-    When a violation is detected, render both the rule violation header AND the verbose
-    stdout steering block that Nitrous injects into the AI agent's context window.
+    - area_id: "area-3-test-lints"
+      tab_label: "3. Test Lints (`nitrous test-lint`)"
+      description: "Dedicated anti-slop area auditing unit & integration test files so AI agents cannot fake coverage."
+      crud_operations: ["Create Test-Lint via Agent", "Read/Inspect", "Update Verbose Prompt", "Delete/Toggle"]
+      default_records:
+        - id: "no-brittle-style-grep"
+          name: "Drop Brittle Style/Config String Assertions (`test_theme_engine.h`)"
+          specimen: |
+            assert(qss.contains("border-radius: 15px"));
+            assert(qss.contains("border-radius: 13px"));
+            assert(qss.contains("#2d333b"));
+            assert(qss.contains("rgba(255, 255, 255, 0.10)"));
+            assert(qss.contains("border-radius: 5px"));
+          why_drop_verbatim: "This is literally grepping a CSS file inside a C++ unit test. It tests nothing about whether Qt actually parsed the stylesheet or applied it to the widgets."
+          status: "BLOCKING"
+        - id: "no-tautological-config-echo"
+          name: "Drop Exact Font Point/Pixel/Letter-Spacing Config Checks"
+          specimen: |
+            font.setPixelSize(12);
+            font.setLetterSpacing(QFont::AbsoluteSpacing, 0.2);
+            assert(font.pixelSize() == 12);
+            assert(font.letterSpacing() == 0.2);
+          why_drop_verbatim: "Checking that font.pixelSize() == 12 just repeats the line of code font.setPixelSize(12)."
+          status: "BLOCKING"
+        - id: "no-mocking-theater"
+          name: "Drop London-School Mocking Theater (`jest.mock` / `vi.fn`)"
+          why_drop_verbatim: "Bans interaction-only spy call checks (`toHaveBeenCalledWith`); requires stateful in-memory fakes and observable state diffs."
+          status: "BLOCKING"
+        - id: "no-vacuous-assertions"
+          name: "Drop Vacuous Coverage-Padding Assertions (`toBeDefined` / `!= nullptr`)"
+          why_drop_verbatim: "Stops AI agents from gaming 100% line coverage gates with hollow non-null checks."
+          status: "BLOCKING"
+        - id: "zinsser-test-prose"
+          name: "Enforce William Zinsser Active-Verb Test Prose"
+          why_drop_verbatim: "Drops bureaucratic fillers (`should`, `properly`, `correctly`, `works as expected`); requires active present-tense verbs (`compiles`, `clamps`, `neutralizes`)."
+          status: "RATCHET"
 </screen_data>
 
 ---
